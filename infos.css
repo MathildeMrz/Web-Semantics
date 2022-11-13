@@ -15,7 +15,7 @@ h3
     font-size: 36px;
     font-weight: 700;
     line-height: 61px;
-    
+    animation: float 8s ease-in-out infinite;
 }
 
 #top
@@ -52,6 +52,7 @@ h4
     font-size: 28px;
     font-weight: 700;
     line-height: 39px;
+    animation: float 8s ease-in-out infinite;
 }
 
 #bottom
@@ -105,4 +106,30 @@ footer
 #map {
   height:100%;
   position:static !important;
+}
+
+#planetImage { 
+    width : 50%;
+    height : 70%;
+    animation: float 8s ease-in-out infinite;
+}
+
+div
+{
+    animation: float 10s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-20px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
 }
