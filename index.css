@@ -1,0 +1,113 @@
+body{
+    background-color: black;
+    min-height: 100%;
+}
+@font-face {
+    font-family: Inter-bold;
+    src: url(./fonts/Inter/static/Inter-Bold.ttf);
+  }
+
+.container{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+cursor:url("/assets/cursor2.png"), auto;
+}
+
+.description{
+position: absolute;
+width: 456px;
+height: 366px;
+left: 53px;
+top: 232px;
+
+font-family: 'Inter-bold';
+font-style: normal;
+font-weight: 700;
+font-size: 60px;
+line-height: 73px;
+
+color: #FFFFFF;
+animation: 2s anim-lineUp ease-out;
+}
+@keyframes anim-lineUp {
+    0% {
+      opacity: 0;
+      transform: translateY(80%);
+    }
+    20% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+
+.search-icon{
+position: absolute;
+width: 45px;
+height: 46px;
+left: 451px;
+top: 537px;
+
+background: url(./assets/Search.png);
+}
+
+.slider{
+position: absolute;
+width: 48px;
+height: 45px;
+left: 525px;
+top: 537px;
+
+background: url(./assets/Slider.png);
+}
+
+.search-bar{
+box-sizing: border-box;
+
+position: absolute;
+width: 456px;
+height: 53px;
+left: 53px;
+top: 534px;
+
+border: 1px solid #FFFFFF;
+}
+
+/* Planete INSA */
+.title{
+position: absolute;
+width: 191px;
+height: 36px;
+left: 51px;
+top: 37px;
+
+font-family: 'Inter-bold';
+font-style: normal;
+font-weight: 700;
+font-size: 30px;
+line-height: 36px;
+
+color: #FFFFFF;
+}
+#search{
+  width: 380px;
+  height: 45px;
+  margin:2px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: larger;
+}
+#search:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  color: white;
+}

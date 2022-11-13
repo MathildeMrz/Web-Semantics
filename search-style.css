@@ -1,0 +1,146 @@
+@font-face {
+    font-family: Inter-bold;
+    src: url(./fonts/Inter/static/Inter-Bold.ttf);
+  }
+  @font-face {
+    font-family: Inter;
+    src: url(./fonts/Inter/static/Inter-Regular.ttf);
+  }
+
+body{
+    background-color: black;
+    min-height: 100%;
+    cursor:url("/assets/cursor2.png"), auto;
+
+}  
+.search-bar{
+  box-sizing: border-box;
+  display: flex;
+  justify-content:flex-end;
+  width: 456px;
+  height: 53px;
+  
+  border: 1px solid #FFFFFF;
+}
+
+.search-icon{
+  width: 45px;
+  height: 46px; 
+  background: url(./assets/Search.png);
+  margin-right: 10px;
+  }
+  
+  .slider{
+  width: 48px;
+  height: 45px;
+  background: url(./assets/Slider.png);
+  margin-left: 10px;
+  }
+
+/* Planete INSA */
+.title{
+  position: absolute;
+    width: 191px;
+    height: 36px;
+    left: 51px;
+    top: 37px;
+
+    
+    font-family: 'Inter-bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    
+    color: #FFFFFF;
+    }
+.search-bloc{
+  margin-top: 80px;
+  display: flex;
+  justify-content:center;
+  
+}
+.container{
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card{
+  border: 0.25px solid white;
+  color: white;
+  margin: 10px;
+  min-width: 25%;
+  min-height: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: 'Inter-bold';
+}
+.back{
+
+  font-family: 'Inter-bold';
+
+  font-size: 30px;
+  line-height: 36px;
+
+  color: #FFFFFF;
+}
+.back-bloc{
+  display: flex;
+}
+.pages{
+  display: flex;
+  color: #FFFFFF;
+  justify-content: flex-end;
+  margin-right: 5%;
+  font-family: 'Inter';
+}
+.selected-page{
+  font-family: 'Inter-Bold';
+}
+#search{
+  width: 380px;
+  height: 45px;
+  margin:2px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: larger;
+}
+#search:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  color: white;
+}
+.stars, .twinkling{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.stars {
+  background:#000 url(./assets/stars.png) repeat top center;
+  z-index:-10;
+}
+
+@keyframes move-twink-back {
+  from {background-position:0 0;}
+  to {background-position:-10000px 5000px;}
+}
+
+
+.twinkling{
+  background:transparent url(./assets/twinkling.png) repeat top center;
+  z-index:-9;
+  animation:move-twink-back 200s linear infinite;
+}
