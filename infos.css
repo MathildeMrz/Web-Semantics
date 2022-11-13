@@ -1,0 +1,108 @@
+.background
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/sparksky.jpg');
+    color:white;
+    display: flex;
+    flex-direction: column;
+}
+
+
+h3
+{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 61px;
+    
+}
+
+#top
+{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    vertical-align: top;
+}
+
+#toptop
+{
+    margin-left: 5%;
+}
+
+.image
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width:35%;
+    
+}
+
+.information
+{
+    width: 45%;  
+    text-align: justify;  
+}
+
+h4
+{
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 39px;
+}
+
+#bottom
+{
+    display: flex;
+    justify-content:center;
+}
+
+#bottombottom
+{
+  display: flex;
+  justify-content:center;
+  width: 45% !important;
+}
+
+.information2
+{ 
+    text-align: justify;  
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+p
+{
+    font-size: 20px;
+    font-weight: 400;
+}
+
+footer
+{
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    height: 4%;
+}
+
+.backButton
+{
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border:none;
+    color:white;
+}
+
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height:100%;
+  position:static !important;
+}
