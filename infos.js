@@ -49,7 +49,7 @@ async function chargerInformations(researchedPlanet){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?surface ?meanTemperature ?rotationPeriod ?knownFor
+    SELECT ?surface ?meanTemperature ?rotationPeriod ?name ?abstract ?knownFor
     WHERE
     { 
         {`+lien_infos +` dbp:surfaceArea ?surface}
@@ -64,15 +64,20 @@ async function chargerInformations(researchedPlanet){
 
         UNION
 
+        {`+lien_infos +` dbp:name ?name}
+
+        UNION
+
+        {`+lien_infos +` dbo:abstract ?abstract}
+
+        UNION
+
         {?knownFor dbo:knownFor` +lien_infos+`}
-        
+
     }`;
-
-
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
-    //alert(url);
     getJSON(url,function(err, data) {
     if (err !== null) {
         alert('Something went wrong: ' + err);
@@ -87,11 +92,17 @@ async function chargerInformations(researchedPlanet){
         rotationPeriod = rotationPeriod.split("\"}}")[0];
         var knownFor = stringifiedJson.split("knownFor\":{\"type\":\"uri\",\"value\":\"")[1];
         knownFor = knownFor.split("\"}}]}}")[0];
+        var name  = stringifiedJson.split("name\":{\"type\":\"literal\",\"xml:lang\":\"en\",\"value\":\"")[1];
+        name = name.split("\"}}")[0];
+        var abstract  = stringifiedJson.split("\abstract\":{\"type\":\"literal\",\"xml:lang\":\"ca\",\"value\":\"")[1];
+
         //TODO : VOIT COMMENT FAIRE S IL EXISTE PLUSIEURS RESULTATS
         document.getElementById("dbo:surfaceArea").innerHTML = surfaceArea;
         document.getElementById("dbo:meanTemperature").innerHTML = meanTemperature;
         document.getElementById("dbo:rotationPeriod").innerHTML = rotationPeriod;
         document.getElementById("dbo:knownFor").innerHTML = knownFor;
+        document.getElementById("planetName").innerHTML = name;
+        document.getElementById("planetDescription2").innerHTML = abstract;
     }
     });
 
