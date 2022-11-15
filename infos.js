@@ -79,11 +79,10 @@ async function chargerInformations(){
     }
     });
 
-    rechercher(researchedPlanet);
     document.getElementById("planetName").innerHTML = researchedPlanet;
 
     //Charger données
-    /*var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
+    var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
     var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -94,7 +93,7 @@ async function chargerInformations(){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?surface ?meanTemperature ?rotationPeriod ?name ?abstract ?knownFor
+    SELECT ?surface ?meanTemperature ?rotationPeriod ?knownFor
     WHERE
     { 
         {`+lien_infos +` dbp:surfaceArea ?surface}
@@ -109,74 +108,63 @@ async function chargerInformations(){
 
         UNION
 
-        {`+lien_infos +` dbp:name ?name}
-
-        UNION
-
-        {`+lien_infos +` dbo:abstract ?abstract}
-
-        UNION
-
         {?knownFor dbo:knownFor` +lien_infos+`}
 
     }`;
+  
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
-    getJSON(url,function(err, data) {
-    if (err !== null) {
-        alert('Something went wrong: ' + err);
-    }
-    else {
-        const stringifiedJson = JSON.stringify(data);
-        var surfaceArea = stringifiedJson.split("surface\":{\"type\":\"typed-literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#double\",\"value\":\"")[1];
-        surfaceArea = surfaceArea.split("\"}}")[0];
-        var meanTemperature = stringifiedJson.split("meanTemperature\":{\"type\":\"typed-literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#double\",\"value\":\"")[1];
-        meanTemperature = meanTemperature.split("\"}}")[0];
-        var rotationPeriod = stringifiedJson.split("rotationPeriod\":{\"type\":\"typed-literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#double\",\"value\":\"")[1];
-        rotationPeriod = rotationPeriod.split("\"}}")[0];
-        var knownFor = stringifiedJson.split("knownFor\":{\"type\":\"uri\",\"value\":\"")[1];
-        knownFor = knownFor.split("\"}}]}}")[0];
-        var name  = stringifiedJson.split("name\":{\"type\":\"literal\",\"xml:lang\":\"en\",\"value\":\"")[1];
-        name = name.split("\"}}")[0];
-        var abstract  = stringifiedJson.split("\abstract\":{\"type\":\"literal\",\"xml:lang\":\"ca\",\"value\":\"")[1];
 
-        //TODO : VOIT COMMENT FAIRE S IL EXISTE PLUSIEURS RESULTATS
-        document.getElementById("dbo:surfaceArea").innerHTML = surfaceArea;
-        document.getElementById("dbo:meanTemperature").innerHTML = meanTemperature;
-        document.getElementById("dbo:rotationPeriod").innerHTML = rotationPeriod;
-        document.getElementById("dbo:knownFor").innerHTML = knownFor;
-        document.getElementById("planetName").innerHTML = name;
-        document.getElementById("planetDescription2").innerHTML = abstract;
-    }
-    });*/
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    alert("Là");
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert("Ici");
+            var results = JSON.parse(this.responseText);
+            console.log(results)
+            //afficherResultats(results);
+            console.log("coucou");
+            document.getElementById("dbo:surfaceArea").innerHTML = "coucou";
+            alert("dbo:surfaceArea modified");
+            document.getElementById("dbo:meanTemperature").innerHTML = meanTemperature;
+            document.getElementById("dbo:rotationPeriod").innerHTML = rotationPeriod;
+            document.getElementById("dbo:knownFor").innerHTML = knownFor;
+        }
+        else
+        {
+            alert("Something wrong appened")
+        }
+    };
+    rechercher(researchedPlanet);
+
 }
-
+ 
 function rechercher(researchedPlanet) {
     var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
     var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
-PREFIX : <http://dbpedia.org/resource/>
-PREFIX dbpedia2: <http://dbpedia.org/property/>
-PREFIX dbpedia: <http://dbpedia.org/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-SELECT ?propertyName ?hasValue ?isValueOf 
-WHERE {
-  { `+lien_infos +` ?property ?hasValue.
-    ?property rdfs:label ?propertyName
-  }
-  UNION
-  { ?isValueOf ?property`+lien_infos +`.
-  ?property rdfs:label ?propertyName
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT ?propertyName ?hasValue ?isValueOf 
+    WHERE {
+    { `+lien_infos +` ?property ?hasValue.
+        ?property rdfs:label ?propertyName
     }
-
-  FILTER((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double)
-}
-`;
+    UNION
+    { ?isValueOf ?property`+lien_infos +`.
+    ?property rdfs:label ?propertyName
+    }
+    FILTER((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double)
+    }
+    `;
 
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
@@ -187,7 +175,7 @@ WHERE {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            console.log(results)
+            //console.log(results)
             afficherResultats(results);
         }
     };

@@ -88,7 +88,7 @@ footer
 }
 
 #planetImage { 
-    width : 50%;
+    width : 60%;
     height : 70%;
     animation: float 8s ease-in-out infinite;
 }
@@ -139,3 +139,30 @@ div
     color:white;
     flex-direction: column;
     }
+
+   #resultats {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+     #resultats td,#resultats th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      
+     #resultats tr:nth-child(even){background-color: transparent;}
+      
+     #resultats tr:hover {
+        background-image: url(assets/planetes.png);
+    }      
+
+     #resultats th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-image: url(assets/planetes.png);
+        color: white;
+     }
