@@ -6,8 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="search-style.css">
     <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="search-page.js"></script>
     <title>Search</title>
 </head>
+<script>
+    window.onload = function() {
+       rechercher();
+    };
+ </script>
 <body class="container"> 
     <div class="stars"></div>
     <div class="twinkling"></div> 
@@ -50,6 +56,8 @@
                     <div class="name">Earth</div>
             </div>
         </div>
+        <div id="searchedPlanets"></div>
+        <img src="" alt="" id="planetImage">
         <div class="pages">
             <p class="selected-page">
                 1
