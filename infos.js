@@ -25,11 +25,55 @@ function rechercher(researchedPlanet) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            var results = JSON.parse(this.responseText);
-            console.log(results)
-            afficherResultats(results);
+            var source = this.responseText.split("\"property\": { \"type\": \"uri\", \"value\": \"http://dbpedia.org/ontology/abstract\" }	, \"hasValue\": { \"type\": \"literal\", \"xml:lang\": \"en\", \"value\": \"")[1];
+            source = source.split("\" }},")[0];
+           //TODO: Remove unicode
+            document.getElementById("planetDescription2").innerText = source;
+
         }
     };
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
+function rechercher2(researchedPlanet) {
+    var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
+    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT ?description
+    WHERE { `+lien_infos +` dbo:abstract ?description }`;
+
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+           var results = JSON.parse(this.responseText);
+           var source;
+           results["results"]["bindings"].forEach(element => {
+            if(element.description["xml:lang"]=="en"){
+                source = element.description.value;
+
+            }
+
+});
+            document.getElementById("planetDescription2").innerText = source;
+
+        }
+    };
+
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 }
