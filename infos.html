@@ -1,17 +1,17 @@
  <!DOCTYPE html>
- <html lang="en">
+ <html lang="en"> 
    <head>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="infos.css">
-      <script type="text/javascript" src="infos.js"></script>
+      <script type="text/javascript" src="infos.js"></script> 
       <title>Infos</title>
    </head>
    
    <script>
       window.onload = function() {
-         chercherImages("Uranus");
+         chargerInformations("Uranus");
          rechercher2("Uranus");
       };
    </script>
@@ -27,7 +27,14 @@
          </div>
          <div class="information">
             <h3>Données</h3>
-            <p id="planetDescription">MDatas.</p>  
+            <p>Surface area : </p>
+            <p id="dbo:surfaceArea">surfaceArea</p>
+            <p>Mean temperature : </p>
+            <p id="dbo:meanTemperature">meanTemperature</p>  
+            <p>Rotation period : </p>
+            <p id="dbo:rotationPeriod">rotationPeriod</p>  
+            <p>Known for : </p>
+            <p id="dbo:knownFor">knownFor</p>  
          </div>
       </contener>
 
@@ -44,5 +51,4 @@
          </button>
       </footer>
    </body>
-
  </html>
