@@ -126,10 +126,35 @@ async function chargerInformations(){
             var results = JSON.parse(this.responseText);
             console.log(results);
             //var meanTemperature = results.slice();
-            document.getElementById("dbo:surfaceArea").innerHTML = results.results.bindings[0].surface.value;
-            document.getElementById("dbo:meanTemperature").innerHTML = results.results.bindings[1].meanTemperature.value;
-            document.getElementById("dbo:rotationPeriod").innerHTML = results.results.bindings[3].rotationPeriod.value;
-            document.getElementById("dbo:knownFor").innerHTML = results.results.bindings[4].knownFor.value;
+            if(results.results.bindings[0].surface != undefined)
+            {                
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Surface area : "+results.results.bindings[0].surface.value));
+                const currentDiv = document.getElementById("informations");
+                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+                alert("div ajoutée");
+            }
+            if(results.results.bindings[1].meanTemperature != undefined)
+            {
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Mean temperature : "+results.results.bindings[1].meanTemperature.value));
+                const currentDiv = document.getElementById("informations");
+                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+            }
+            if(results.results.bindings[3].rotationPeriod != undefined)
+            {
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Rotation period : "+results.results.bindings[3].rotationPeriod.value));
+                const currentDiv = document.getElementById("informations");
+                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+            }
+            if(results.results.bindings[4].knownFor != undefined)
+            {
+                var newDiv = document.createElement("div");
+                newDiv.appendChild(document.createTextNode("Known for : "+results.results.bindings[4].knownFor.value));
+                const currentDiv = document.getElementById("informations");
+                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+            }
         }
         else
         {
