@@ -86,14 +86,13 @@ body{
 .back{
 
   font-family: 'Inter-bold';
-
   font-size: 30px;
   line-height: 36px;
-
   color: #FFFFFF;
 }
 .back-bloc{
   display: flex;
+  cursor:pointer;
 }
 .pages{
   display: flex;
@@ -147,3 +146,4 @@ body{
   z-index:-9;
   animation:move-twink-back 200s linear infinite;
 }
+
