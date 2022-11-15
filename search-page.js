@@ -1,4 +1,4 @@
-async function chercherImages(researchedPlanet){
+async function chercherImages(researchedPlanet, id){
     var getJSON = function(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
@@ -22,16 +22,15 @@ async function chercherImages(researchedPlanet){
         const stringifiedJson = JSON.stringify(data);
         var source = stringifiedJson.split("source\":\"")[1];
         source = source.split("\"}}}}")[0];
-        document.getElementById("planetImage").setAttribute("src",source);
+        document.getElementById(id).setAttribute("src",source);
     }
-
-
     });
-
 }
-  function rechercher() {
+
+  function rechercher_liste_planete() {
     var searchedPlanet = window.location.search;
     searchedPlanet = searchedPlanet.slice(1);
+    document.getElementById("search").value = searchedPlanet;
     var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -42,12 +41,12 @@ async function chercherImages(researchedPlanet){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?l WHERE {
+    SELECT ?p GROUP_CONCAT(?l; separator="/") as ?label WHERE {
         ?p a dbo:Planet.
-        ?p dbp:name ?l.
+        ?p dbp:name ?l .
         FILTER(langMatches(lang(?l),"FR") || langMatches(lang(?l),"EN"))
-        FILTER(regex(lcase(str(?l)), ".*`
-        +searchedPlanet + `.*"))
+        FILTER(regex(lcase(str(?l)), lcase(str(".*`
+        +searchedPlanet + `.*"))))
         }
     GROUP BY ?p `;
         // Encodage de l'URL à transmettre à DBPedia
@@ -60,13 +59,23 @@ async function chercherImages(researchedPlanet){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 results = JSON.parse(this.responseText);
-                //TODO: mettre les noms dans un tableau
-                //remplacer les espaces par des tirets avec str = str.replace(/ /g, "_");
-                //stocker les noms et les images (faire appel à chercherImages avec les noms avec tirets en paramètre)
-                document.getElementById("searchedPlanets").innerText = this.responseText;
-                chercherImages("Uranus");
+                console.log(results);
+                results.results.bindings.forEach((p, i) => {
+                    var str = p.label.value.replace(/ /g, "_");
+                    console.log(str);
+                    document.getElementById("listPlanetes").innerHTML +=
+                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+p.label.value+')>'
+                    +'<img id="img'+(i+1)+'" src="./assets/notFound.jpg" alt="" style="width:90%;">'
+                    +'<div id="name'+(i+1)+'" class="name">'+p.label.value+'</div>'
+                    +'</div>';
+                    chercherImages(str, ("img"+(i+1)));
+                });
             }
         };
         xmlhttp.open("GET", url, true);
         xmlhttp.send();
+  }
+
+  function afficherInformations(planet) {
+    window.location.replace("/infos.html?"+planet);
   }

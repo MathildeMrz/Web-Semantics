@@ -79,10 +79,12 @@ body{
   justify-content: center;
   font-size: 30px;
   font-family: 'Inter-bold';
+  overflow-wrap: break-word;
 }
 .card:hover{
   transform: scale(1.05); 
 }
+
 .back{
 
   font-family: 'Inter-bold';
