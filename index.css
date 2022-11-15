@@ -49,23 +49,23 @@ animation: 2s anim-lineUp ease-out;
   }
 
 .search-icon{
-position: absolute;
-width: 45px;
-height: 46px;
-left: 451px;
-top: 537px;
-
-background: url(./assets/Search.png);
+  position: absolute;
+  width: 45px;
+  height: 46px;
+  left: 451px;
+  top: 537px;
+  background: url(./assets/Search.png);
+  cursor: pointer;
 }
 
 .slider{
-position: absolute;
-width: 48px;
-height: 45px;
-left: 525px;
-top: 537px;
-
-background: url(./assets/Slider.png);
+  position: absolute;
+  width: 48px;
+  height: 45px;
+  left: 525px;
+  top: 537px;
+  background: url(./assets/Slider.png);
+  cursor: pointer
 }
 
 .search-bar{
@@ -111,3 +111,4 @@ color: #FFFFFF;
   border-color: transparent;
   color: white;
 }
+

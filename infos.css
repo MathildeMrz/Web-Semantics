@@ -90,15 +90,6 @@ footer
     height: 4%;
 }
 
-.backButton
-{
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border:none;
-    color:white;
-}
-
 /* 
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
@@ -132,4 +123,18 @@ div
 		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
 		transform: translatey(0px);
 	}
+}
+
+.back-bloc{
+    display: flex;
+    cursor:pointer;
+}
+
+.back
+{
+    animation:none;
+    font-family: 'Inter-bold';
+    font-size: 30px;
+    line-height: 36px;
+    color: #FFFFFF;
 }
