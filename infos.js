@@ -27,9 +27,7 @@ function rechercher2(researchedPlanet) {
             if(element.description["xml:lang"]=="en"){
                 source = element.description.value;
 
-            }
-
-});
+            }});
             document.getElementById("planetDescription2").innerText = source;
 
         }
