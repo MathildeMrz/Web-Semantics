@@ -1,15 +1,3 @@
-.background
-{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('assets/sparksky.jpg');
-    color:white;
-    display: flex;
-    flex-direction: column;
-}
-
-
 h3
 {
     font-size: 36px;
@@ -138,3 +126,16 @@ div
     line-height: 36px;
     color: #FFFFFF;
 }
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor:url("/assets/cursor2.png"), auto;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/sparksky.jpg');
+    color:white;
+    flex-direction: column;
+    }
