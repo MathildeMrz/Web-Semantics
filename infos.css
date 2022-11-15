@@ -157,6 +157,7 @@ div
       
      #resultats tr:hover {
         background-image: url(assets/planetes.png);
+        background-size:250px;        
     }      
 
      #resultats th {
@@ -164,5 +165,6 @@ div
         padding-bottom: 12px;
         text-align: left;
         background-image: url(assets/planetes.png);
+        background-size:250px;
         color: white;
      }

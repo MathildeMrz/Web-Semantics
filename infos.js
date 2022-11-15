@@ -111,32 +111,33 @@ async function chargerInformations(){
         {?knownFor dbo:knownFor` +lien_infos+`}
 
     }`;
-  
+
+     
     // Encodage de l'URL à transmettre à DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
 
     // Requête HTTP et affichage des résultats
     var xmlhttp = new XMLHttpRequest();
-    alert("Là");
+    
     xmlhttp.onreadystatechange = function() {
+        //alert(this.readyState );
         if (this.readyState == 4 && this.status == 200) {
-            alert("Ici");
             var results = JSON.parse(this.responseText);
-            console.log(results)
-            //afficherResultats(results);
-            console.log("coucou");
-            document.getElementById("dbo:surfaceArea").innerHTML = "coucou";
-            alert("dbo:surfaceArea modified");
-            document.getElementById("dbo:meanTemperature").innerHTML = meanTemperature;
-            document.getElementById("dbo:rotationPeriod").innerHTML = rotationPeriod;
-            document.getElementById("dbo:knownFor").innerHTML = knownFor;
+            console.log(results);
+            //var meanTemperature = results.slice();
+            document.getElementById("dbo:surfaceArea").innerHTML = results.results.bindings[0].surface.value;
+            document.getElementById("dbo:meanTemperature").innerHTML = results.results.bindings[1].meanTemperature.value;
+            document.getElementById("dbo:rotationPeriod").innerHTML = results.results.bindings[3].rotationPeriod.value;
+            document.getElementById("dbo:knownFor").innerHTML = results.results.bindings[4].knownFor.value;
         }
         else
         {
-            alert("Something wrong appened")
+            //alert("Something wrong happened")
         }
     };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
     rechercher(researchedPlanet);
 
 }
