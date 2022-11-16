@@ -1,10 +1,10 @@
 @font-face {
     font-family: Inter-bold;
-    src: url(./fonts/Inter/static/Inter-Bold.ttf);
+    src: url(../../fonts/Inter/static/Inter-Bold.ttf);
   }
   @font-face {
     font-family: Inter;
-    src: url(./fonts/Inter/static/Inter-Regular.ttf);
+    src: url(../../fonts/Inter/static/Inter-Regular.ttf);
   }
 
 body{
@@ -16,7 +16,7 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  cursor:url("/assets/cursor2.png"), auto;
+  cursor:url("../../assets/cursor2.png"), auto;
   }
 
 .search-bar{
@@ -32,14 +32,14 @@ body{
 .search-icon{
   width: 45px;
   height: 46px; 
-  background: url(./assets/Search.png);
+  background: url(../../assets/Search.png);
   margin-right: 10px;
   }
   
   .slider{
   width: 48px;
   height: 45px;
-  background: url(./assets/Slider.png);
+  background: url(../../assets/Slider.png);
   margin-left: 10px;
   }
 
@@ -139,7 +139,7 @@ body{
 }
 
 .stars {
-  background:#000 url(./assets/stars.png) repeat top center;
+  background:#000 url(../../assets/stars.png) repeat top center;
   z-index:-10;
 }
 
@@ -150,7 +150,7 @@ body{
 
 
 .twinkling{
-  background:transparent url(./assets/twinkling.png) repeat top center;
+  background:transparent url(../../assets/twinkling.png) repeat top center;
   z-index:-9;
   animation:move-twink-back 200s linear infinite;
 }

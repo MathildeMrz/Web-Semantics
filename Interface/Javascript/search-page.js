@@ -65,7 +65,7 @@ async function chercherImages(researchedPlanet, id){
                     console.log(str);
                     document.getElementById("listPlanetes").innerHTML +=
                     '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+p.label.value+')>'
-                    +'<img id="img'+(i+1)+'" src="./assets/notFound.jpg" alt="" style="width:90%;">'
+                    +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
                     +'<div id="name'+(i+1)+'" class="name">'+p.label.value+'</div>'
                     +'</div>';
                     chercherImages(str, ("img"+(i+1)));
@@ -77,5 +77,5 @@ async function chercherImages(researchedPlanet, id){
   }
 
   function afficherInformations(planet) {
-    window.location.replace("/infos.html?"+planet);
+    window.location.replace("../Src/infos.html?"+planet);
   }

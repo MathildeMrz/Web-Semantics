@@ -67,7 +67,7 @@ async function chargerInformations(){
         if(stringifiedJson.includes(researchedPlanet+"\",\"missing"))
         {
             alert("Image non trouvée");
-            source = "assets/notFound.jpg";
+            source = "../../assets/notFound.jpg";
         }
         else
         {
@@ -121,7 +121,6 @@ async function chargerInformations(){
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onreadystatechange = function() {
-        //alert(this.readyState );
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
             console.log(results);
@@ -132,7 +131,6 @@ async function chargerInformations(){
                 newDiv.appendChild(document.createTextNode("Surface area : "+results.results.bindings[0].surface.value));
                 const currentDiv = document.getElementById("informations");
                 currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-                alert("div ajoutée");
             }
             if(results.results.bindings[1].meanTemperature != undefined)
             {

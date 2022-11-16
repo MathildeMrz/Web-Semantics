@@ -131,11 +131,11 @@ div
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    cursor:url("/assets/cursor2.png"), auto;
+    cursor:url("../../assets/cursor2.png"), auto;
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url('assets/sparksky.jpg');
+    background-image: url('../../assets/sparksky.jpg');
     color:white;
     flex-direction: column;
     }
@@ -156,7 +156,7 @@ div
      #resultats tr:nth-child(even){background-color: transparent;}
       
      #resultats tr:hover {
-        background-image: url(assets/planetes.png);
+        background-image: url(../../assets/planetes.png);
         background-size:250px;        
     }      
 
@@ -164,7 +164,7 @@ div
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-image: url(assets/planetes.png);
+        background-image: url(../../assets/planetes.png);
         background-size:250px;
         color: white;
      }
