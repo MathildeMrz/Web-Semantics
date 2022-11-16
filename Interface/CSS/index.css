@@ -144,3 +144,9 @@ color: #FFFFFF;
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.fields
+{
+  display: flex;
+  color:white;
+}

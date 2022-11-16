@@ -59,10 +59,8 @@ async function chercherImages(researchedPlanet, id){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 results = JSON.parse(this.responseText);
-                console.log(results);
                 results.results.bindings.forEach((p, i) => {
                     var str = p.label.value.replace(/ /g, "_");
-                    console.log(str);
                     document.getElementById("listPlanetes").innerHTML +=
                     '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+p.label.value+')>'
                     +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'

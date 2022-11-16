@@ -123,7 +123,6 @@ async function chargerInformations(){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            console.log(results);
             //var meanTemperature = results.slice();
             if(results.results.bindings[0].surface != undefined)
             {                
@@ -199,7 +198,6 @@ function rechercher(researchedPlanet) {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            //console.log(results)
             afficherResultats(results);
         }
     };

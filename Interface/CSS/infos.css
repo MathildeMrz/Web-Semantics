@@ -154,12 +154,7 @@ div
       }
       
      #resultats tr:nth-child(even){background-color: transparent;}
-      
-     #resultats tr:hover {
-        background-image: url(../../assets/planetes.png);
-        background-size:250px;        
-    }      
-
+     
      #resultats th {
         padding-top: 12px;
         padding-bottom: 12px;

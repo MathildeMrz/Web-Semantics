@@ -26,9 +26,25 @@
                 </div>
             </div>
             <div class="search-icon" onclick=rechercher()></div>
-            <div class="slider"></div>
-        </div>
-    
+            <div id="sliderIndex" class="slider"></div>
+            <div class="ui form" id="radioButtonsIndex" style="display:none">
+                <div class="inline fields">
+                  <label>Language</label>
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <input type="radio" name="frequency" checked="checked">
+                      <label>English</label>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <input type="radio" name="frequency">
+                      <label>French</label>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>    
         <img src="../../assets/earth.jpg" alt="" class="column">
     </div>    
 </body>
@@ -44,7 +60,18 @@
       }
     });
 
-    //var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+    document.getElementById("sliderIndex").onclick = function()
+    {
+        if(document.getElementById("radioButtonsIndex").style.display == "block")
+        {
+            document.getElementById("radioButtonsIndex").style.display = "none";
+        }
+        else
+        {
+            document.getElementById("radioButtonsIndex").style.display = "block";
+        }
+    };
+  
     var planetes = [];
     var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -61,7 +88,7 @@
     { 
         {
           ?planete rdf:type dbo:Planet.
-          ?planete rdfs:label ?p
+          ?planete dbp:name ?p
         }
         FILTER(langMatches(lang(?p),"EN"))
     }`;
@@ -76,9 +103,6 @@
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            
-            console.log(results.results.bindings[0].p.value);
-
             for (var i = 0; i < results.results.bindings.length; i++) {
                 planetes.push(results.results.bindings[i].p.value);
             }
