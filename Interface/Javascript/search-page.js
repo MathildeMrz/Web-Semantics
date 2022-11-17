@@ -62,7 +62,7 @@ async function chercherImages(researchedPlanet, id){
                 results.results.bindings.forEach((p, i) => {
                     var str = p.label.value.replace(/ /g, "_");
                     document.getElementById("listPlanetes").innerHTML +=
-                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+p.label.value+')>'
+                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(p.label.value)+')>'
                     +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
                     +'<div id="name'+(i+1)+'" class="name">'+p.label.value+'</div>'
                     +'</div>';
