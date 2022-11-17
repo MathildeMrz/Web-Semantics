@@ -24,39 +24,51 @@
                 <div class="autocomplete" style="width:300px;">
                     <input type="text" placeholder="Search.." id="search">
                 </div>
+                <div class="ui form" id="radioButtonsIndex">
+                    <div class="inline fields">
+                    <label>Language</label>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                        <input type="radio" checked="checked" name="language" value="en">
+                        <label>English</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                        <input type="radio" name="language" value="fr">
+                        <label>French</label>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="autocomplete" style="width:300px;">
+                    <input type="text" placeholder="Search a deity" id="deity" >
+                </div>
             </div>
             <div class="search-icon" onclick=rechercher()></div>
             <div id="sliderIndex" class="slider"></div>
-            <div class="ui form" id="radioButtonsIndex" style="display:none">
-                <div class="inline fields">
-                  <label>Language</label>
-                  <div class="field">
-                    <div class="ui radio checkbox">
-                      <input type="radio" name="frequency" checked="checked">
-                      <label>English</label>
-                    </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui radio checkbox">
-                      <input type="radio" name="frequency">
-                      <label>French</label>
-                    </div>
-                  </div>
-                </div>
-            </div>
+            
         </div>    
         <img src="../../assets/earth.jpg" alt="" class="column">
     </div>    
 </body>
 <script>
     var input = document.getElementById("search");
+    
     // Execute a function when the user releases a key on the keyboard
     input.addEventListener("keyup", function(event) {
+        
       // Number 13 is the "Enter" key on the keyboard
       if (event.keyCode === 13) {
         // Cancel the default action, if needed
-        event.preventDefault();
-        rechercher();
+        var deity = document.getElementById('deity').value;
+        
+        var radioButtonGroup = document.getElementsByName("language");
+        var checkedLanguage = Array.from(radioButtonGroup).find(
+            (radio) => radio.checked
+        );
+        event.preventDefault();        
+        rechercher(deity, checkedLanguage.value);
       }
     });
 
@@ -65,10 +77,12 @@
         if(document.getElementById("radioButtonsIndex").style.display == "block")
         {
             document.getElementById("radioButtonsIndex").style.display = "none";
+            document.getElementById("deity").style.display = "none";
         }
         else
         {
             document.getElementById("radioButtonsIndex").style.display = "block";
+            document.getElementById("deity").style.display = "block";
         }
     };
   
@@ -114,5 +128,48 @@
     xmlhttp.send();
 
     autocomplete(document.getElementById("search"), planetes);
+
+    var deity = [];
+    var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT ?p
+    WHERE
+    { 
+        {
+          ?planete rdf:type dbo:Planet.
+          ?planete dbp:name ?p
+        }
+        FILTER(langMatches(lang(?p),"EN"))
+    }`;
+
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            for (var i = 0; i < results.results.bindings.length; i++) {
+                deity.push(results.results.bindings[i].p.value);
+            }
+        
+        }
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    autocomplete(document.getElementById("deity"), deity);
 </script>
 </html>

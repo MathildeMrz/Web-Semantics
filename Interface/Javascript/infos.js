@@ -93,7 +93,7 @@ async function chargerInformations(){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?surface ?meanTemperature ?rotationPeriod ?knownFor
+    SELECT ?surface ?meanTemperature ?rotationPeriod ?knownFor ?density
     WHERE
     { 
         {`+lien_infos +` dbp:surfaceArea ?surface}
@@ -110,6 +110,10 @@ async function chargerInformations(){
 
         {?knownFor dbo:knownFor` +lien_infos+`}
 
+        UNION
+
+        {`+lien_infos +` dbo:density ?density}
+
     }`;
 
      
@@ -123,8 +127,24 @@ async function chargerInformations(){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            //var meanTemperature = results.slice();
-            if(results.results.bindings[0].surface != undefined)
+            for(var i = 0; i< results.results.bindings.length; i++)
+            {
+                var newDiv = document.createElement("div");
+                var propertyName = JSON.stringify(Object.getOwnPropertyNames(results.results.bindings[i]));
+                propertyName = JSON.stringify(propertyName.substring(2, propertyName.length -2));
+
+                var value = JSON.stringify(results.results.bindings[i].Object.getOwnPropertyNames(results.results.bindings[i]).substring(2, propertyName.length -2).value);
+                
+                alert("Property name : "+propertyName);
+                //alert(JSON.stringify(results.results.bindings[i].propertyName.value));
+                //alert(JSON.stringify(results.results.bindings[i].propertyName.value));
+                //TODO : CETTE LIGNE LA AFFICHE PAS CE QUE JE VEUX
+                //newDiv.appendChild(document.createTextNode(propertyName+" :"+JSON.stringify(results.results.bindings[i]+".String(propertyName).value")));
+                const currentDiv = document.getElementById("informations");
+                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+            }
+
+            /*if(results.results.bindings[0].surface != undefined)
             {                
                 var newDiv = document.createElement("div");
                 newDiv.appendChild(document.createTextNode("Surface area : "+results.results.bindings[0].surface.value));
@@ -151,7 +171,7 @@ async function chargerInformations(){
                 newDiv.appendChild(document.createTextNode("Known for : "+results.results.bindings[4].knownFor.value));
                 const currentDiv = document.getElementById("informations");
                 currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-            }
+            }*/
         }
         else
         {

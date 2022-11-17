@@ -1,5 +1,8 @@
 
-  function rechercher() {
+  function rechercher(deity, language) {
+    //console.log("deity : "+deity);
+    //console.log("language : "+language);
     var searchedPlanet = document.getElementById("search").value;
-    window.location.replace("../Src/search-page.html?"+searchedPlanet);
+    //console.log("searchedPlanet : "+searchedPlanet);
+    window.location.replace("../Src/search-page.html?"+searchedPlanet+"?"+language+"?"+deity);
   }

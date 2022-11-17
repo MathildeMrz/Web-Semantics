@@ -197,3 +197,9 @@ body{
   grid-gap: 20px;
   align-items: stretch;
 }
+
+.fields
+{
+  display: flex;
+  color:white;
+}

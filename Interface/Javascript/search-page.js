@@ -28,8 +28,39 @@ async function chercherImages(researchedPlanet, id){
 }
 
   function rechercher_liste_planete() {
-    var searchedPlanet = window.location.search;
-    searchedPlanet = searchedPlanet.slice(1);
+    var url = window.location.search;
+    url = url.slice(1);
+
+    var start = 0;
+    var end = (url.indexOf("?"));
+
+    var searchedPlanet = url.substring(start, end);
+    url = url.substring(end+1, url.length);
+   
+    end = (url.indexOf("?"));  
+    var language = url.substring(start, end);
+    url = url.substring(end+1, url.length);
+    
+    var deity = url.substring(start, url.length);
+
+    console.log("searchedPlanet : "+searchedPlanet);    
+    console.log("language : "+language);
+    console.log("deity : "+deity);
+
+    var query = `SELECT ?p GROUP_CONCAT(?l; separator="/") as ?label WHERE {
+        ?p a dbo:Planet. 
+        ?p dbp:name ?l. `
+    if(deity != "")
+    {
+        query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+    }
+    query += `FILTER(langMatches(lang(?l),"`+language+`"))
+    FILTER(regex(lcase(str(?l)), lcase(str(".*`
+    +searchedPlanet + `.*"))))
+    }`
+
+    console.log(query);
+
     document.getElementById("search").value = searchedPlanet;
     var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -40,15 +71,9 @@ async function chercherImages(researchedPlanet, id){
     PREFIX : <http://dbpedia.org/resource/>
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
-    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?p GROUP_CONCAT(?l; separator="/") as ?label WHERE {
-        ?p a dbo:Planet.
-        ?p dbp:name ?l .
-        FILTER(langMatches(lang(?l),"FR") || langMatches(lang(?l),"EN"))
-        FILTER(regex(lcase(str(?l)), lcase(str(".*`
-        +searchedPlanet + `.*"))))
-        }
-    GROUP BY ?p `;
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>`
+    +query+
+    `GROUP BY ?p `;
         // Encodage de l'URL à transmettre à DBPedia
         var url_base = "http://dbpedia.org/sparql";
         var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
