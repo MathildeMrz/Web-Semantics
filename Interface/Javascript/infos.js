@@ -15,11 +15,11 @@ function rechercher2() {
     SELECT ?description
     WHERE { `+lien_infos +` dbo:abstract ?description }`;
 
-    // Encodage de l'URL à transmettre à DBPedia
+    // Encodage de l'URL Ã  transmettre Ã  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
 
-    // Requête HTTP et affichage des résultats
+    // RequÃªte HTTP et affichage des rÃ©sultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -66,7 +66,7 @@ async function chargerInformations(){
         var source;
         if(stringifiedJson.includes(researchedPlanet+"\",\"missing"))
         {
-            alert("Image non trouvée");
+            alert("Image non trouvÃ©e");
             source = "../../assets/notFound.jpg";
         }
         else
@@ -81,7 +81,7 @@ async function chargerInformations(){
 
     document.getElementById("planetName").innerHTML = researchedPlanet;
 
-    //Charger données
+    //Charger donnÃ©es
     var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
     var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -117,11 +117,11 @@ async function chargerInformations(){
     }`;
 
      
-    // Encodage de l'URL à transmettre à DBPedia
+    // Encodage de l'URL Ã  transmettre Ã  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
 
-    // Requête HTTP et affichage des résultats
+    // RequÃªte HTTP et affichage des rÃ©sultats
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onreadystatechange = function() {
@@ -181,11 +181,11 @@ function rechercher(researchedPlanet) {
     }
     `;
 
-    // Encodage de l'URL à transmettre à DBPedia
+    // Encodage de l'URL Ã  transmettre Ã  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
 
-    // Requête HTTP et affichage des résultats
+    // RequÃªte HTTP et affichage des rÃ©sultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -197,11 +197,11 @@ function rechercher(researchedPlanet) {
     xmlhttp.send();
   }
 
-  // Affichage des résultats dans un tableau
+  // Affichage des rÃ©sultats dans un tableau
   function afficherResultats(data)
   {
-    // Tableau pour mémoriser l'ordre des variables ; sans doute pas nécessaire
-    // pour vos applications, c'est juste pour la démo sous forme de tableau
+    // Tableau pour mÃ©moriser l'ordre des variables ; sans doute pas nÃ©cessaire
+    // pour vos applications, c'est juste pour la dÃ©mo sous forme de tableau
     var index = [];
 
     var contenuTableau = "<tr>";
