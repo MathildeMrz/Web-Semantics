@@ -63,7 +63,9 @@ async function chercherImages(researchedPlanet, id){
         {
             //TODO
             deity = decodeURI(deity);
-            query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. dbr:`+deity+` a dbo:Deity `
+            
+            //FILTER(langMatches(lang(?l),"en"))
+            query += `dbr:`+deity+` dbp:planet ?p. dbr:`+deity+` a dbo:Deity `
         }
     }
 
