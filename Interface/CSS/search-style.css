@@ -202,3 +202,37 @@ body{
   display: flex;
   color:white;
 }
+
+#deity {
+  border: none; /* Removes the default border */
+  border-bottom: 2px solid white;
+  background-color: transparent;
+  color: white;
+}
+#deityBox{
+  display: none;
+}
+
+#deity:focus {
+  outline: none /* Removes the border when the input is clicked */
+}
+
+.filters{
+  margin: 5px;
+  margin-right:500px
+}
+label{
+  color: white;
+  font-family: 'Inter-regular';
+  padding-right: 10px;
+}
+.filter{
+ margin: 5px 0px;
+ padding: 5px 0px;
+}
+#radioButtonsIndex{
+  display: none;
+}
+#satelliteBox{
+  display: none;
+}
