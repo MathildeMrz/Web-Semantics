@@ -168,28 +168,26 @@ function rechercher(researchedPlanet) {
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?propertyName ?hasValue ?isValueOf 
-    WHERE {
-    { `+lien_infos +` ?property ?hasValue.
-        ?property rdfs:label ?propertyName
-    }
-    UNION
-    { ?isValueOf ?property`+lien_infos +`.
-    ?property rdfs:label ?propertyName
-    }
-    FILTER((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double)
-    }
+    
+        SELECT DISTINCT ?propertyName ?hasValue ?isValueOf 
+        WHERE {
+        {  `+lien_infos +`?property ?hasValue.
+            ?property rdfs:label ?propertyName
+        }
+        FILTER((langMatches(lang(?propertyName),"FR") || langMatches(lang(?propertyName),"EN")) && ((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double))
+        }
     `;
 
     // Encodage de l'URL Ã  transmettre Ã  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
-
+    console.log(url);
     // RequÃªte HTTP et affichage des rÃ©sultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
+            console.log(results);
             afficherResultats(results);
         }
     };
