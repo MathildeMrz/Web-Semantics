@@ -28,7 +28,7 @@
                     <div class="autocomplete" style="width:300px;">
                         <input type="text" placeholder="Search.." id="search">
                     </div>
-                    <div class="search-icon" onclick=rechercher()></div>
+                    <div class="search-icon"></div>
                 </div>            
                 <div class="slider"></div>
             </div>
@@ -59,11 +59,18 @@
     
     // Execute a function when the user releases a key on the keyboard
     input.addEventListener("keyup", function(event) {
+        
       // Number 13 is the "Enter" key on the keyboard
       if (event.keyCode === 13) {
         // Cancel the default action, if needed
-        event.preventDefault();
-        rechercher();
+        var deity = document.getElementById('deity').value;
+        
+        var radioButtonGroup = document.getElementsByName("language");
+        var checkedLanguage = Array.from(radioButtonGroup).find(
+            (radio) => radio.checked
+        );
+        event.preventDefault();   
+        rechercher(); //A COMPLETER AVEC LES FILTRES
       }
     });
 

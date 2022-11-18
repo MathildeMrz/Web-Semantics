@@ -59,7 +59,6 @@ animation: 2s anim-lineUp ease-out;
   left: 451px;
   top: 537px;
   background: url(../../assets/Search.png);
-  cursor: pointer;
 }
 
 .slider{
