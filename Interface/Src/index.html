@@ -24,25 +24,28 @@
                 <div class="autocomplete" style="width:300px;">
                     <input type="text" placeholder="Search.." id="search">
                 </div>
-                <div class="ui form" id="radioButtonsIndex">
-                    <div class="inline fields">
-                    <label>Language</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                        <input type="radio" checked="checked" name="language" value="en">
-                        <label>English</label>
+                <div class="filters">
+                    <div class="ui form filter" id="radioButtonsIndex">
+                        <div class="inline fields">
+                        <label>Language</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" checked="checked" name="language" value="en">
+                            <label>English</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="language" value="fr">
+                            <label>French</label>
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                        <input type="radio" name="language" value="fr">
-                        <label>French</label>
-                        </div>
+                    <div class="autocomplete filter" style="width:300px;">
+                        <label>Deity</label>
+                        <input type="text" placeholder="Search a deity" id="deity" >
                     </div>
-                    </div>
-                </div>
-                <div class="autocomplete" style="width:300px;">
-                    <input type="text" placeholder="Search a deity" id="deity" >
                 </div>
             </div>
             <div class="search-icon" onclick=rechercher()></div>

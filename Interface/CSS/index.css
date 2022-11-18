@@ -150,3 +150,30 @@ color: #FFFFFF;
   display: flex;
   color:white;
 }
+
+#deity {
+  border: none; /* Removes the default border */
+  border-bottom: 2px solid white;
+  background-color: transparent;
+  color: white;
+}
+
+#deity:focus {
+  outline: none /* Removes the border when the input is clicked */
+}
+.ui{
+  font-family: 'Inter-Bold';
+}
+.filters{
+  margin: 5px;
+  display: none;
+}
+label{
+  color: white;
+  font-family: 'Inter-Bold';
+  padding-right: 10px;
+}
+.filter{
+ margin: 5px 0px;
+ padding: 5px 0px;
+}
