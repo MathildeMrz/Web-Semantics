@@ -127,51 +127,23 @@ async function chargerInformations(){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
+            console.log(results);
             for(var i = 0; i< results.results.bindings.length; i++)
             {
                 var newDiv = document.createElement("div");
                 var propertyName = JSON.stringify(Object.getOwnPropertyNames(results.results.bindings[i]));
-                propertyName = JSON.stringify(propertyName.substring(2, propertyName.length -2));
+                propertyName = propertyName.substring(2, propertyName.length -2);
+                var value = results.results.bindings[i][propertyName].value;
+                //newDiv.appendChild(document.createTextNode(propertyName+" : "+ value));
+                //const currentDiv = document.getElementById("informations");
+                //currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
 
-                var value = JSON.stringify(results.results.bindings[i].Object.getOwnPropertyNames(results.results.bindings[i]).substring(2, propertyName.length -2).value);
-                
-                alert("Property name : "+propertyName);
-                //alert(JSON.stringify(results.results.bindings[i].propertyName.value));
-                //alert(JSON.stringify(results.results.bindings[i].propertyName.value));
-                //TODO : CETTE LIGNE LA AFFICHE PAS CE QUE JE VEUX
-                //newDiv.appendChild(document.createTextNode(propertyName+" :"+JSON.stringify(results.results.bindings[i]+".String(propertyName).value")));
-                const currentDiv = document.getElementById("informations");
-                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
+                var contenuTableau = "<tr>";
+                contenuTableau += "<td>" + propertyName + "</td>";
+                contenuTableau += "<td>" + value + "</td>";
+                contenuTableau += "</tr>";
+                document.getElementById("informations").innerHTML += contenuTableau;
             }
-
-            /*if(results.results.bindings[0].surface != undefined)
-            {                
-                var newDiv = document.createElement("div");
-                newDiv.appendChild(document.createTextNode("Surface area : "+results.results.bindings[0].surface.value));
-                const currentDiv = document.getElementById("informations");
-                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-            }
-            if(results.results.bindings[1].meanTemperature != undefined)
-            {
-                var newDiv = document.createElement("div");
-                newDiv.appendChild(document.createTextNode("Mean temperature : "+results.results.bindings[1].meanTemperature.value));
-                const currentDiv = document.getElementById("informations");
-                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-            }
-            if(results.results.bindings[3].rotationPeriod != undefined)
-            {
-                var newDiv = document.createElement("div");
-                newDiv.appendChild(document.createTextNode("Rotation period : "+results.results.bindings[3].rotationPeriod.value));
-                const currentDiv = document.getElementById("informations");
-                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-            }
-            if(results.results.bindings[4].knownFor != undefined)
-            {
-                var newDiv = document.createElement("div");
-                newDiv.appendChild(document.createTextNode("Known for : "+results.results.bindings[4].knownFor.value));
-                const currentDiv = document.getElementById("informations");
-                currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-            }*/
         }
         else
         {
