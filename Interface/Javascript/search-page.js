@@ -61,7 +61,9 @@ async function chercherImages(researchedPlanet, id){
             ?p dbp:name ?l. `;
         if(deity != "")
         {
-            query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+            //TODO
+            deity = decodeURI(deity);
+            query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. dbr:`+deity+` a dbo:Deity `
         }
     }
 
@@ -77,7 +79,7 @@ async function chercherImages(researchedPlanet, id){
         query += `FILTER(langMatches(lang(?l),"`+language+`"))}`
     }
 
-    console.log(query);
+    console.log("queryyyyyyy : "+query);
 
     document.getElementById("search").value = searchedPlanet;
     var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>

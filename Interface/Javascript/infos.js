@@ -169,7 +169,7 @@ function rechercher(researchedPlanet) {
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     
-        SELECT DISTINCT ?propertyName ?hasValue ?isValueOf 
+        SELECT DISTINCT ?propertyName ?hasValue ?isValueOf
         WHERE {
         {  `+lien_infos +`?property ?hasValue.
             ?property rdfs:label ?propertyName
