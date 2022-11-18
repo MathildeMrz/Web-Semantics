@@ -47,13 +47,24 @@ async function chercherImages(researchedPlanet, id){
 
     var satelliteOf = url.substring(start, url.length);
 
-    var query = `SELECT str(?p) WHERE {
-        ?p a dbo:Planet. 
-        ?p dbp:name ?l. `
-    if(deity != "")
+    var query;
+    if(satelliteOf == "true")
     {
-        query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+        query = `SELECT str(?satellite) WHERE {
+            ?p a dbo:Planet. 
+            ?p dbp:name ?l. 
+            ?satellite dbp:satelliteOf ?p. `;
     }
+    else {
+        query = `SELECT str(?p) WHERE {
+            ?p a dbo:Planet. 
+            ?p dbp:name ?l. `;
+        if(deity != "")
+        {
+            query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+        }
+    }
+
     if(searchedPlanet != "")
     {
         query += `FILTER(langMatches(lang(?l),"`+language+`"))
@@ -79,6 +90,7 @@ async function chercherImages(researchedPlanet, id){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>`
+    
     +query+
     `GROUP BY ?p `;
         // Encodage de l'URL Ã  transmettre Ã  DBPedia
@@ -93,6 +105,7 @@ async function chercherImages(researchedPlanet, id){
             if (this.readyState == 4 && this.status == 200) {
                 results = JSON.parse(this.responseText);
                 console.log(results);
+                console.log("bjr");
                 console.log(results.results.bindings[0]["callret-0"].value);
                 for (var i = 0; i < results.results.bindings.length; i++) {
                     console.log((results.results.bindings[i]["callret-0"].value).split("resource/")[0]);
