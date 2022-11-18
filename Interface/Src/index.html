@@ -30,13 +30,13 @@
                         <label>Language</label>
                         <div class="field">
                             <div class="ui radio checkbox">
-                            <input type="radio" checked="checked" name="language" value="en">
+                            <input type="radio" checked="checked" name="language" value="en" id="en">
                             <label>English</label>
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui radio checkbox">
-                            <input type="radio" name="language" value="fr">
+                            <input type="radio" name="language" value="fr" id="fr">
                             <label>French</label>
                             </div>
                         </div>
@@ -63,6 +63,22 @@
     </div>    
 </body>
 <script>
+    window.onload = function() {
+        document.getElementById("satelliteOf").addEventListener('click', e =>{
+
+            if(document.getElementById("satelliteOf").checked === true){
+                document.getElementById("deity").disabled = true;
+                document.getElementById("fr").disabled = true;
+                document.getElementById("en").disabled = true;
+            }
+            else{
+                document.getElementById("deity").disabled = false;
+                document.getElementById("fr").disabled = false;
+                document.getElementById("en").disabled = false;
+            }
+            
+        })
+    }
     var input = document.getElementById("search");
     
     // Execute a function when the user releases a key on the keyboard
