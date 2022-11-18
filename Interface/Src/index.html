@@ -68,15 +68,13 @@
 
             if(document.getElementById("satelliteOf").checked === true){
                 document.getElementById("deity").disabled = true;
-                document.getElementById("fr").disabled = true;
-                document.getElementById("en").disabled = true;
+                document.getElementById("deity").style.color = "#484848";
             }
             else{
                 document.getElementById("deity").disabled = false;
-                document.getElementById("fr").disabled = false;
-                document.getElementById("en").disabled = false;
-            }
-            
+                document.getElementById("deity").style.color = "white";
+
+            } 
         })
     }
     var input = document.getElementById("search");

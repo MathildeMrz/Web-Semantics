@@ -190,7 +190,7 @@ body{
 
 #listPlanetes
 {
-  margin-top: 20px;
+  margin-top: 5%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 20px;
@@ -210,17 +210,18 @@ body{
   color: white;
 }
 #deityBox{
-  display: none;
+  display: block;
 }
 
 #deity:focus {
   outline: none /* Removes the border when the input is clicked */
 }
 
-.filters{
-  margin: 5px;
-  margin-right:500px
+.filters-center{
+  display: flex;
+  justify-content: center;
 }
+
 label{
   color: white;
   font-family: 'Inter-regular';
@@ -231,8 +232,8 @@ label{
  padding: 5px 0px;
 }
 #radioButtonsIndex{
-  display: none;
+  display: block;
 }
 #satelliteBox{
-  display: none;
+  display: block;
 }

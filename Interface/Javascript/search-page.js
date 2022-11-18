@@ -82,6 +82,14 @@ async function chercherImages(researchedPlanet, id){
     console.log("queryyyyyyy : "+query);
 
     document.getElementById("search").value = searchedPlanet;
+    document.getElementById("deity").value = deity;
+    if(satelliteOf == "true"){
+        document.getElementById("satelliteOf").checked = true;
+    }
+    if(language == "fr"){
+        document.getElementById('radio-button-french').checked = true;
+    }
+    
     var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
