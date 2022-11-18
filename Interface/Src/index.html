@@ -24,32 +24,36 @@
                 <div class="autocomplete" style="width:300px;">
                     <input type="text" placeholder="Search.." id="search">
                 </div>
-                <div class="ui form" id="radioButtonsIndex">
-                    <div class="inline fields">
-                    <label>Language</label>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                        <input type="radio" checked="checked" name="language" value="en">
-                        <label>English</label>
+                <div class="filters">
+                    <div class="ui form filter" id="radioButtonsIndex">
+                        <div class="inline fields">
+                        <label>Language</label>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" checked="checked" name="language" value="en" id="en">
+                            <label>English</label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox">
+                            <input type="radio" name="language" value="fr" id="fr">
+                            <label>French</label>
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui radio checkbox">
-                        <input type="radio" name="language" value="fr">
-                        <label>French</label>
-                        </div>
+                    <div class="autocomplete filter" style="width:300px;" id="deityBox">
+                        <label>Deity</label>
+                        <input type="text" placeholder="Search a deity" id="deity" >
                     </div>
+                    <div style="width:300px;" id="satelliteBox">
+                        <input type="checkbox" id="satelliteOf" >
+                            <label for="satelliteOf"> 
+                                Search the satellites 
+                            </label>
                     </div>
                 </div>
-                <div class="autocomplete" style="width:300px;">
-                    <input type="text" placeholder="Search a deity" id="deity" >
-                </div>
-                <div style="width:300px;">
-                    <input type="checkbox" id="satelliteOf" >
-                        <label for="satelliteOf"> 
-                            Search the satellites 
-                        </label>
-                </div>
+               
             </div>
             <div class="search-icon"></div>
             <div id="sliderIndex" class="slider"></div>
@@ -59,6 +63,22 @@
     </div>    
 </body>
 <script>
+    window.onload = function() {
+        document.getElementById("satelliteOf").addEventListener('click', e =>{
+
+            if(document.getElementById("satelliteOf").checked === true){
+                document.getElementById("deity").disabled = true;
+                document.getElementById("fr").disabled = true;
+                document.getElementById("en").disabled = true;
+            }
+            else{
+                document.getElementById("deity").disabled = false;
+                document.getElementById("fr").disabled = false;
+                document.getElementById("en").disabled = false;
+            }
+            
+        })
+    }
     var input = document.getElementById("search");
     
     // Execute a function when the user releases a key on the keyboard
@@ -83,12 +103,14 @@
         if(document.getElementById("radioButtonsIndex").style.display == "block")
         {
             document.getElementById("radioButtonsIndex").style.display = "none";
-            document.getElementById("deity").style.display = "none";
+            document.getElementById("deityBox").style.display = "none";
+            document.getElementById("satelliteBox").style.display = "none";
         }
         else
         {
             document.getElementById("radioButtonsIndex").style.display = "block";
-            document.getElementById("deity").style.display = "block";
+            document.getElementById("deityBox").style.display = "block";
+            document.getElementById("satelliteBox").style.display = "block";
         }
     };
   
