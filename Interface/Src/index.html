@@ -42,20 +42,18 @@
                         </div>
                         </div>
                     </div>
-                    <div class="autocomplete filter" style="width:300px;">
+                    <div class="autocomplete filter" style="width:300px;" id="deityBox">
                         <label>Deity</label>
                         <input type="text" placeholder="Search a deity" id="deity" >
                     </div>
+                    <div style="width:300px;" id="satelliteBox">
+                        <input type="checkbox" id="satelliteOf" >
+                            <label for="satelliteOf"> 
+                                Search the satellites 
+                            </label>
+                    </div>
                 </div>
-                <div class="autocomplete" style="width:300px;">
-                    <input type="text" placeholder="Search a deity" id="deity" >
-                </div>
-                <div style="width:300px;">
-                    <input type="checkbox" id="satelliteOf" >
-                        <label for="satelliteOf"> 
-                            Search the satellites 
-                        </label>
-                </div>
+               
             </div>
             <div class="search-icon"></div>
             <div id="sliderIndex" class="slider"></div>
@@ -89,12 +87,14 @@
         if(document.getElementById("radioButtonsIndex").style.display == "block")
         {
             document.getElementById("radioButtonsIndex").style.display = "none";
-            document.getElementById("deity").style.display = "none";
+            document.getElementById("deityBox").style.display = "none";
+            document.getElementById("satelliteBox").style.display = "none";
         }
         else
         {
             document.getElementById("radioButtonsIndex").style.display = "block";
-            document.getElementById("deity").style.display = "block";
+            document.getElementById("deityBox").style.display = "block";
+            document.getElementById("satelliteBox").style.display = "block";
         }
     };
   

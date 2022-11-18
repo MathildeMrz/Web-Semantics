@@ -6,6 +6,10 @@ body{
     font-family: Inter-bold;
     src: url(../../fonts/Inter/static/Inter-Bold.ttf);
   }
+  @font-face {
+    font-family: Inter-regular;
+    src: url(../../fonts/Inter/static/Inter-Regular.ttf);
+  }
 
 .container{
 display: flex;
@@ -160,23 +164,29 @@ color: #FFFFFF;
   background-color: transparent;
   color: white;
 }
+#deityBox{
+  display: none;
+}
 
 #deity:focus {
   outline: none /* Removes the border when the input is clicked */
 }
-.ui{
-  font-family: 'Inter-Bold';
-}
+
 .filters{
   margin: 5px;
-  display: none;
 }
 label{
   color: white;
-  font-family: 'Inter-Bold';
+  font-family: 'Inter-regular';
   padding-right: 10px;
 }
 .filter{
  margin: 5px 0px;
  padding: 5px 0px;
+}
+#radioButtonsIndex{
+  display: none;
+}
+#satelliteBox{
+  display: none;
 }
