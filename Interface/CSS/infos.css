@@ -18,6 +18,9 @@ h3
 #toptop
 {
     margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .image
@@ -70,12 +73,13 @@ p
     font-weight: 400;
 }
 
-footer
+.top-right
 {
     display: flex;
     flex-direction: row;
-    font-size: 15px;
-    height: 4%;
+    height: 17%;
+    margin-top: 4%;
+    vertical-align: center;
 }
 
 /* 
@@ -122,8 +126,8 @@ div
 {
     animation:none;
     font-family: 'Inter-bold';
-    font-size: 30px;
-    line-height: 36px;
+    font-size: 28px;
+    line-height: 18px;
     color: #FFFFFF;
 }
 
