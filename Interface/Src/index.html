@@ -47,8 +47,17 @@
                         <input type="text" placeholder="Search a deity" id="deity" >
                     </div>
                 </div>
+                <div class="autocomplete" style="width:300px;">
+                    <input type="text" placeholder="Search a deity" id="deity" >
+                </div>
+                <div style="width:300px;">
+                    <input type="checkbox" id="satelliteOf" >
+                        <label for="satelliteOf"> 
+                            Search the satellites 
+                        </label>
+                </div>
             </div>
-            <div class="search-icon" onclick=rechercher()></div>
+            <div class="search-icon"></div>
             <div id="sliderIndex" class="slider"></div>
             
         </div>    
@@ -70,8 +79,8 @@
         var checkedLanguage = Array.from(radioButtonGroup).find(
             (radio) => radio.checked
         );
-        event.preventDefault();        
-        rechercher(deity, checkedLanguage.value);
+        event.preventDefault();   
+        rechercher(deity, checkedLanguage.value, document.getElementById("satelliteOf").checked);
       }
     });
 

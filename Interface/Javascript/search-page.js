@@ -41,23 +41,41 @@ async function chercherImages(researchedPlanet, id){
     var language = url.substring(start, end);
     url = url.substring(end+1, url.length);
     
-    var deity = url.substring(start, url.length);
+    end = (url.indexOf("?"));  
+    var deity = url.substring(start, end);
+    url = url.substring(end+1, url.length);
 
-    console.log("searchedPlanet : "+searchedPlanet);    
-    console.log("language : "+language);
-    console.log("deity : "+deity);
+    var satelliteOf = url.substring(start, url.length);
 
-    var query = `SELECT ?p GROUP_CONCAT(?l; separator="/") as ?label WHERE {
-        ?p a dbo:Planet. 
-        ?p dbp:name ?l. `
-    if(deity != "")
+    var query;
+    if(satelliteOf == "true")
     {
-        query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+        query = `SELECT str(?satellite) WHERE {
+            ?p a dbo:Planet. 
+            ?p dbp:name ?l. 
+            ?satellite dbp:satelliteOf ?p. `;
     }
-    query += `FILTER(langMatches(lang(?l),"`+language+`"))
-    FILTER(regex(lcase(str(?l)), lcase(str(".*`
-    +searchedPlanet + `.*"))))
-    }`
+    else {
+        query = `SELECT str(?p) WHERE {
+            ?p a dbo:Planet. 
+            ?p dbp:name ?l. `;
+        if(deity != "")
+        {
+            query += `?p dbo:wikiPageWikiLink dbr:`+deity+`. `
+        }
+    }
+
+    if(searchedPlanet != "")
+    {
+        query += `FILTER(langMatches(lang(?l),"`+language+`"))
+        FILTER(regex(lcase(str(?l)), lcase(str(".*`
+        +searchedPlanet + `.*"))))
+        }`
+    }
+    else
+    {
+        query += `FILTER(langMatches(lang(?l),"`+language+`"))}`
+    }
 
     console.log(query);
 
@@ -72,27 +90,50 @@ async function chercherImages(researchedPlanet, id){
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>`
+    
     +query+
     `GROUP BY ?p `;
-        // Encodage de l'URL à transmettre à DBPedia
+        // Encodage de l'URL Ã  transmettre Ã  DBPedia
         var url_base = "http://dbpedia.org/sparql";
         var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+        console.log(url);
 
-        // Requête HTTP et affichage des résultats
+        // RequÃªte HTTP et affichage des rÃ©sultats
         var xmlhttp = new XMLHttpRequest();
         var results;
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 results = JSON.parse(this.responseText);
-                results.results.bindings.forEach((p, i) => {
-                    var str = p.label.value.replace(/ /g, "_");
+                console.log(results);
+                console.log("bjr");
+                console.log(results.results.bindings[0]["callret-0"].value);
+                for (var i = 0; i < results.results.bindings.length; i++) {
+                    console.log((results.results.bindings[i]["callret-0"].value).split("resource/")[0]);
+                    console.log((results.results.bindings[i]["callret-0"].value).split("resource/")[1]);
+                    var name = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
+                    var str = name.replace(/ /g, "_");
                     document.getElementById("listPlanetes").innerHTML +=
-                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(p.label.value)+')>'
+                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name)+')>'
                     +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
-                    +'<div id="name'+(i+1)+'" class="name">'+p.label.value+'</div>'
+                    +'<div id="name'+(i+1)+'" class="name">'+name+'</div>'
                     +'</div>';
                     chercherImages(str, ("img"+(i+1)));
-                });
+                }
+    
+                /*results.results.bindings.forEach((p, i) => {
+                    //console.log(p[i].callret-0.value);
+                    console.log(p);
+                    console.log(p[i]["callret-0"].value);
+                    var name = (p.label.value).split("/")[0]; //AJOUTE
+                    console.log(name);
+                    var str = name.replace(/ /g, "_");
+                    document.getElementById("listPlanetes").innerHTML +=
+                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name)+')>'
+                    +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
+                    +'<div id="name'+(i+1)+'" class="name">'+name+'</div>'
+                    +'</div>';
+                    chercherImages(str, ("img"+(i+1)));
+                });*/
             }
         };
         xmlhttp.open("GET", url, true);
