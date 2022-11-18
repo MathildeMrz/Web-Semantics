@@ -41,11 +41,11 @@ async function chercherImages(researchedPlanet, id){
     var language = url.substring(start, end);
     url = url.substring(end+1, url.length);
     
-    var deity = url.substring(start, url.length);
+    end = (url.indexOf("?"));  
+    var deity = url.substring(start, end);
+    url = url.substring(end+1, url.length);
 
-    console.log("searchedPlanet : "+searchedPlanet);    
-    console.log("language : "+language);
-    console.log("deity : "+deity);
+    var satelliteOf = url.substring(start, url.length);
 
     var query = `SELECT ?p GROUP_CONCAT(?l; separator="/") as ?label WHERE {
         ?p a dbo:Planet. 
