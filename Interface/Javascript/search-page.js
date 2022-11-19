@@ -29,6 +29,7 @@ async function chercherImages(researchedPlanet, id){
 
   function rechercher_liste_planete() {
     var url = window.location.search;
+    url = decodeURI(url);
     url = url.slice(1);
 
     var start = 0;
