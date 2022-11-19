@@ -62,26 +62,29 @@ async function chercherImages(researchedPlanet, id){
             ?p dbp:name ?l. `;
         if(deity != "")
         {
-            deity = decodeURI(deity);
+            //TODO
+            //deity = decodeURI(deity);
             
-            query+=`?x dbp:planet ?p.
-                ?x a dbo:Deity.
-                ?x rdfs:label ?label.
-                FILTER (contains(?label,"+deity+") )
-              `
+            //FILTER(langMatches(lang(?l),"en"))
+            //query += `dbr:`+deity+` dbp:planet ?p. dbr:`+deity+` a dbo:Deity `
+            query += `?x dbp:planet ?p.
+            ?x a dbo:Deity.
+            ?x rdfs:label ?label.
+            FILTER(contains(?label,"`+deity+`"))
+            FILTER(langMatches(lang(?label),"en")).`
         }
     }
 
     if(searchedPlanet != "")
     {
-        query += `FILTER(langMatches(lang(?l),"en"))
+        query += `FILTER(langMatches(lang(?l),"`+language+`"))
         FILTER(regex(lcase(str(?l)), lcase(str(".*`
         +searchedPlanet + `.*"))))
         }`
     }
     else
     {
-        query += `FILTER(langMatches(lang(?l),"en"))}`
+        query += `FILTER(langMatches(lang(?l),"`+language+`"))}`
     }
 
     console.log("queryyyyyyy : "+query);
@@ -108,12 +111,12 @@ async function chercherImages(researchedPlanet, id){
     
     +query+
     `GROUP BY ?p `;
-        // Encodage de l'URL Ã  transmettre Ã  DBPedia
+        // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
         var url_base = "http://dbpedia.org/sparql";
         var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
         console.log(url);
 
-        // RequÃªte HTTP et affichage des rÃ©sultats
+        // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
         var xmlhttp = new XMLHttpRequest();
         var results;
         xmlhttp.onreadystatechange = function() {
