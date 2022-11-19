@@ -15,11 +15,11 @@ function rechercher2() {
     SELECT ?description
     WHERE { `+lien_infos +` dbo:abstract ?description }`;
 
-    // Encodage de l'URL Ã  transmettre Ã  DBPedia
+    // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
 
-    // RequÃªte HTTP et affichage des rÃ©sultats
+    // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -66,7 +66,7 @@ async function chargerInformations(){
         var source;
         if(stringifiedJson.includes(researchedPlanet+"\",\"missing"))
         {
-            alert("Image non trouvÃ©e");
+            alert("Image non trouvÃƒÂ©e");
             source = "../../assets/notFound.jpg";
         }
         else
@@ -81,7 +81,7 @@ async function chargerInformations(){
 
     document.getElementById("planetName").innerHTML = researchedPlanet;
 
-    //Charger donnÃ©es
+    //Charger donnÃƒÂ©es
     var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
     var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -117,11 +117,11 @@ async function chargerInformations(){
     }`;
 
      
-    // Encodage de l'URL Ã  transmettre Ã  DBPedia
+    // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
 
-    // RequÃªte HTTP et affichage des rÃ©sultats
+    // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onreadystatechange = function() {
@@ -137,12 +137,14 @@ async function chargerInformations(){
                 //newDiv.appendChild(document.createTextNode(propertyName+" : "+ value));
                 //const currentDiv = document.getElementById("informations");
                 //currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
-
-                var contenuTableau = "<tr>";
-                contenuTableau += "<td>" + propertyName + "</td>";
-                contenuTableau += "<td>" + value + "</td>";
-                contenuTableau += "</tr>";
-                document.getElementById("informations").innerHTML += contenuTableau;
+                if(value != "")
+                {
+                    var contenuTableau = "<tr>";
+                    contenuTableau += "<td>" + propertyName + "</td>";
+                    contenuTableau += "<td>" + value + "</td>";
+                    contenuTableau += "</tr>";
+                    document.getElementById("informations").innerHTML += contenuTableau;
+                }
             }
         }
         else
@@ -174,15 +176,15 @@ function rechercher(researchedPlanet) {
         {  `+lien_infos +`?property ?hasValue.
             ?property rdfs:label ?propertyName
         }
-        FILTER((langMatches(lang(?propertyName),"FR") || langMatches(lang(?propertyName),"EN")) && ((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double))
+        FILTER((langMatches(lang(?propertyName),"FR") || langMatches(lang(?propertyName),"EN")) && (((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) && (str(?hasValue) != "")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double))
         }
     `;
 
-    // Encodage de l'URL Ã  transmettre Ã  DBPedia
+    // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
     console.log(url);
-    // RequÃªte HTTP et affichage des rÃ©sultats
+    // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -195,11 +197,11 @@ function rechercher(researchedPlanet) {
     xmlhttp.send();
   }
 
-  // Affichage des rÃ©sultats dans un tableau
+  // Affichage des rÃƒÂ©sultats dans un tableau
   function afficherResultats(data)
   {
-    // Tableau pour mÃ©moriser l'ordre des variables ; sans doute pas nÃ©cessaire
-    // pour vos applications, c'est juste pour la dÃ©mo sous forme de tableau
+    // Tableau pour mÃƒÂ©moriser l'ordre des variables ; sans doute pas nÃƒÂ©cessaire
+    // pour vos applications, c'est juste pour la dÃƒÂ©mo sous forme de tableau
     var index = [];
 
     var contenuTableau = "<tr>";
