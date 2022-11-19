@@ -60,7 +60,67 @@
             
         </div>    
         <img src="../../assets/earth.jpg" alt="" class="column">
-    </div>    
+    </div> 
+    
+    <div id="choices-wrapper">   
+        <div id="title"><h1>Interesting facts</h1></div>
+        <div id="tl-choices">
+          
+           <div class="planet-wrapper" data-tl="demos" id="planet1">
+            <span class="planet-label" id="planet1Label">Number of planets</span>
+        <div class="planet planet1">
+         <div id="planet-clouds1">
+          <div class="planet-cloud planet-cloud1"></div>
+          <div class="planet-cloud planet-cloud2"></div>
+          <div class="planet-cloud planet-cloud3"></div>
+          <div class="planet-cloud planet-cloud4"></div>
+          <div class="planet-cloud planet-cloud5"></div>
+          <div class="planet-cloud planet-cloud6"></div>
+          <div class="planet-cloud planet-cloud7"></div>
+         </div>  
+         <div id="planet-clouds2">
+           <div class="planet-cloud planet-cloud5"></div>
+           <div class="planet-cloud planet-cloud6"></div>
+           <div class="planet-cloud planet-cloud2"></div>
+           <div class="planet-cloud planet-cloud7"></div>
+           <div class="planet-cloud planet-cloud1"></div>
+           <div class="planet-cloud planet-cloud2"></div>
+          </div>
+        </div>
+        </div>
+          
+          <div class="planet-wrapper" data-tl="development" id="planet2">
+            <span class="planet-label" id="planet2Label">Number of celestial bodies</span>
+            <div class="planet planet2">
+              <div class="planet-ring"></div>
+              <div class="planet-crater planet-crater1"></div>
+              <div class="planet-crater planet-crater2"></div>
+              <div class="planet-crater planet-crater3"></div>
+              <div class="planet-crater planet-crater4"></div>
+              <div class="planet-crater planet-crater5"></div>
+            </div>
+          </div>
+          
+         <div class="planet-wrapper" data-tl="rollout" id="planet3">
+           <div id="planet-moon"></div>
+          <span class="planet-label" id="planet3Label">Number of artificiel satellites</span>
+          <div class="planet planet3">
+            <div class="planet-line1"></div>
+            <div class="planet-line2"></div>
+            <div class="planet-line3"></div>
+            <div class="planet-line4"></div>
+             <div class="planet-line5"></div>
+            <div id="red-spot"></div>
+          </div>
+          </div>  
+       </div>
+        
+        </div>
+     
+       <section class="timeline" id="tl">
+        </section>
+       </div>
+
 </body>
 <script>
     window.onload = function() {
@@ -196,8 +256,165 @@
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 
-    console.log("deity : ");
-    console.log(deity);
     autocomplete(document.getElementById("deity"), deity);
+
+
+    let planet1 = document.getElementById("planet1");
+    let planet2 = document.getElementById("planet2");
+    let planet3 = document.getElementById("planet3");
+
+    var planetsNumber = "";
+    var celestialBodiesNumber = "";
+    var artificialSatellitesNumber = "";
+
+    var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT
+        count(*)
+    WHERE
+    {
+        ?planet rdf:type dbo:Planet.
+    }
+    `;
+
+        // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            planetsNumber = results.results.bindings[0]["callret-0"].value;
+        }
+        else
+        {
+            "error"
+        }
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT
+        count(*)
+    WHERE
+    {
+        ?celestialBody rdf:type dbo:CelestialBody.
+    }`;
+
+    // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            celestialBodiesNumber = results.results.bindings[0]["callret-0"].value;
+        }
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT
+        count(*)
+    WHERE
+    {
+        ?artificialSatellite rdf:type dbo:ArtificialSatellite.
+    }
+    `;
+
+        // Encodage de l'URL à transmettre à DBPedia
+    var url_base = "http://dbpedia.org/sparql";
+    var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
+
+    // Requête HTTP et affichage des résultats
+    var xmlhttp = new XMLHttpRequest();
+    
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var results = JSON.parse(this.responseText);
+            artificialSatellitesNumber = results.results.bindings[0]["callret-0"].value;
+        }
+        else
+        {
+            "error"
+        }
+    }
+
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    // Ce gestionnaire ne sera exécuté qu'une fois
+    // lorsque le curseur se déplace sur la liste
+    planet1.addEventListener("mouseover", function( event ) {
+        if(document.getElementById("planet1Label").innerHTML == planetsNumber)
+        {
+            document.getElementById("planet1Label").innerHTML = "Number of planets"
+        }
+        else
+        {
+            document.getElementById("planet1Label").innerHTML = planetsNumber;
+        }
+    });
+
+    planet2.addEventListener("mouseover", function( event ) {
+        if(document.getElementById("planet2Label").innerHTML == celestialBodiesNumber)
+        {
+        document.getElementById("planet2Label").innerHTML = "Number of celestial bodies"
+        }
+        else
+        {
+            document.getElementById("planet2Label").innerHTML = celestialBodiesNumber;
+        }
+    });
+
+    planet3.addEventListener("mouseover", function( event ) {
+        if(document.getElementById("planet3Label").innerHTML == artificialSatellitesNumber)
+        {
+        document.getElementById("planet3Label").innerHTML = "Number of artificiel satellites"
+        }
+        else
+        {
+            document.getElementById("planet3Label").innerHTML = artificialSatellitesNumber;
+        }
+    });
+
+    
+    
 </script>
 </html>
