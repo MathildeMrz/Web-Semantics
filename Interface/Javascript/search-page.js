@@ -62,17 +62,19 @@ async function chercherImages(researchedPlanet, id){
             ?p dbp:name ?l. `;
         if(deity != "")
         {
-            //TODO
             deity = decodeURI(deity);
             
-            //FILTER(langMatches(lang(?l),"en"))
-            query += `dbr:`+deity+` dbp:planet ?p. dbr:`+deity+` a dbo:Deity `
+            query+=`?x dbp:planet ?p.
+                ?x a dbo:Deity.
+                ?x rdfs:label ?label.
+                FILTER (contains(?label,"+deity+") )
+              `
         }
     }
 
     if(searchedPlanet != "")
     {
-        query += `FILTER(langMatches(lang(?l),"`+language+`"))
+        query += `FILTER(langMatches(lang(?l),"en"))
         FILTER(regex(lcase(str(?l)), lcase(str(".*`
         +searchedPlanet + `.*"))))
         }`
