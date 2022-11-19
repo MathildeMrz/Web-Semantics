@@ -81,7 +81,7 @@ async function chercherImages(researchedPlanet, id){
     }
     else
     {
-        query += `FILTER(langMatches(lang(?l),"`+language+`"))}`
+        query += `FILTER(langMatches(lang(?l),"en"))}`
     }
 
     console.log("queryyyyyyy : "+query);
