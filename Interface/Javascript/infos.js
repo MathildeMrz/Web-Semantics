@@ -82,6 +82,7 @@ async function chargerInformations(){
     document.getElementById("planetName").innerHTML = researchedPlanet;
 
     //Charger donnÃƒÂ©es
+
     var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
     var query = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -117,11 +118,8 @@ async function chargerInformations(){
     }`;
 
      
-    // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
     var url = url_base + "?query=" + encodeURIComponent(query) + "&format=json";
-
-    // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
     var xmlhttp = new XMLHttpRequest();
     
     xmlhttp.onreadystatechange = function() {
@@ -134,9 +132,6 @@ async function chargerInformations(){
                 var propertyName = JSON.stringify(Object.getOwnPropertyNames(results.results.bindings[i]));
                 propertyName = propertyName.substring(2, propertyName.length -2);
                 var value = results.results.bindings[i][propertyName].value;
-                //newDiv.appendChild(document.createTextNode(propertyName+" : "+ value));
-                //const currentDiv = document.getElementById("informations");
-                //currentDiv.insertBefore(newDiv, currentDiv.nextElementSibling);
                 if(value != "")
                 {
                     var contenuTableau = "<tr>";
@@ -154,6 +149,8 @@ async function chargerInformations(){
     };
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
+
+    
     rechercher(researchedPlanet);
 
 }
