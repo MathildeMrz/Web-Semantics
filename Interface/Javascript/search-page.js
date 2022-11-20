@@ -124,18 +124,23 @@ async function chercherImages(researchedPlanet, id){
                 results = JSON.parse(this.responseText);
                 console.log(results);
                 console.log("bjr");
-                console.log(results.results.bindings[0]["callret-0"].value);
-                for (var i = 0; i < results.results.bindings.length; i++) {
-                    console.log((results.results.bindings[i]["callret-0"].value).split("resource/")[0]);
-                    console.log((results.results.bindings[i]["callret-0"].value).split("resource/")[1]);
-                    var name = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
-                    var str = name.replace(/ /g, "_");
-                    document.getElementById("listPlanetes").innerHTML +=
-                    '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name)+')>'
-                    +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
-                    +'<div id="name'+(i+1)+'" class="name">'+name+'</div>'
-                    +'</div>';
-                    chercherImages(str, ("img"+(i+1)));
+                console.log(results.results.bindings.length);
+                if(results.results.bindings.length == 0)
+                {
+                    window.location.replace("../Src/pageNotFound.html");
+                }
+                else
+                {
+                    for (var i = 0; i < results.results.bindings.length; i++) {
+                        var name = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
+                        var str = name.replace(/ /g, "_");
+                        document.getElementById("listPlanetes").innerHTML +=
+                        '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name)+')>'
+                        +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
+                        +'<div id="name'+(i+1)+'" class="name">'+name+'</div>'
+                        +'</div>';
+                        chercherImages(str, ("img"+(i+1)));
+                    }
                 }
     
                 /*results.results.bindings.forEach((p, i) => {
