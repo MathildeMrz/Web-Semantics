@@ -12,7 +12,8 @@
 </head>
 
 <body>
-    <div class="title">
+
+     <div class="title">
         Planete INSA
     </div>
     <div class="container">
@@ -116,7 +117,92 @@
        </div>
         
         </div>
-   
+        <div id="discoverer-wrapper">
+            <div id="title2"><h1>List of most planet discoverers</h1></div>
+            <div class="list-discoverers" id="list-discoverers">           
+            </div>
+        </div>
+        <div id="events-wrapper">
+            <div id="title2"><h1>Astronomy Events nearby</h1></div>
+            <!-- ADDED-->
+            <section class="carousel" aria-label="Gallery">
+                <ol class="carousel__viewport">
+                  <li id="carousel__slide1"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper">
+                        <div class="eventTitle" id="titleSlide1">
+                            
+                        </div>
+                      <a href="#carousel__slide4"
+                         class="carousel__prev">Go to last slide</a>
+                      <a href="#carousel__slide2"
+                         class="carousel__next">Go to next slide</a>
+                    </div>
+                  </li>
+                  <li id="carousel__slide2"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper">
+                        <div class="eventTitle" id="titleSlide2"></div>
+                    </div>
+                    <a href="#carousel__slide1"
+                       class="carousel__prev">Go to previous slide</a>
+                    <a href="#carousel__slide3"
+                       class="carousel__next">Go to next slide</a>
+                  </li>
+                  <li id="carousel__slide3"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper">
+                        <div class="eventTitle" id="titleSlide3"></div>
+                    </div>
+                    <a href="#carousel__slide2"
+                       class="carousel__prev">Go to previous slide</a>
+                    <a href="#carousel__slide4"
+                       class="carousel__next">Go to next slide</a>
+                  </li>
+                  <li id="carousel__slide4"
+                      tabindex="0"
+                      class="carousel__slide">
+                    <div class="carousel__snapper">
+                        <div class="eventTitle" id="titleSlide4"></div>
+                    </div>
+                    <a href="#carousel__slide3"
+                       class="carousel__prev">Go to previous slide</a>
+                    <a href="#carousel__slide1"
+                       class="carousel__next">Go to first slide</a>
+                  </li>
+                </ol>
+                <aside class="carousel__navigation">
+                  <ol class="carousel__navigation-list">
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide1"
+                         class="carousel__navigation-button">Go to slide 1</a>
+                    </li>
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide2"
+                         class="carousel__navigation-button">Go to slide 2</a>
+                    </li>
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide3"
+                         class="carousel__navigation-button">Go to slide 3</a>
+                    </li>
+                    <li class="carousel__navigation-item">
+                      <a href="#carousel__slide4"
+                         class="carousel__navigation-button">Go to slide 4</a>
+                    </li>
+                  </ol>
+                </aside>
+              </section>
+
+            <!---->
+        </div>
+        <div class="solar-system-wrapper">
+            
+            <div id="title2"><h1><a href="./solar-system.html" class="solar">Check out the solar system</a></h1></div>
+
+        </div>
        <section class="timeline" id="tl">
         </section>
        </div>
@@ -136,6 +222,33 @@
 
             } 
         })
+    getBestDiscoverers();
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", "../../testfile.txt", false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                var textLines = allText.split(/\n/);
+                var elt1 = document.getElementById("carousel__slide1");
+                document.getElementById("titleSlide1").innerHTML = textLines[0];
+                elt1.style.backgroundImage = "url("+textLines[1]+")";
+                var elt2 = document.getElementById("carousel__slide2");
+                document.getElementById("titleSlide2").innerHTML = textLines[2];
+                elt2.style.backgroundImage = "url("+textLines[3]+")";
+                var elt3 = document.getElementById("carousel__slide3");
+                document.getElementById("titleSlide3").innerHTML = textLines[4];
+                elt3.style.backgroundImage = "url("+textLines[5]+")";
+                var elt4 = document.getElementById("carousel__slide4");
+                document.getElementById("titleSlide4").innerHTML = textLines[6];
+                elt4.style.backgroundImage = "url("+textLines[7]+")";
+            }
+        }
+    }
+    rawFile.send(null);
     }
     var input = document.getElementById("search");
     
@@ -406,7 +519,7 @@
     planet3.addEventListener("mouseover", function( event ) {
         if(document.getElementById("planet3Label").innerHTML == artificialSatellitesNumber)
         {
-        document.getElementById("planet3Label").innerHTML = "Number of artificiel satellites"
+        document.getElementById("planet3Label").innerHTML = "Number of artificial satellites"
         }
         else
         {
