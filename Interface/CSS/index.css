@@ -576,7 +576,7 @@ label{
 
 @media screen and (max-width: 1015px) {
   .planet-ring {
-     width: 205px;
+    width: 205px;
     border-radius: 50%;
     height: 60px;
     position: absolute;
