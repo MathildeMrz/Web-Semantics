@@ -235,3 +235,66 @@ document.addEventListener("click", function (e) {
     closeAllLists(e.target);
 });
 }
+
+function getBestDiscoverers(){
+
+  var query = `PREFIX bd: <http://www.bigdata.com/rdf#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX wd: <http://www.wikidata.org/entity/>
+  PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+  PREFIX wikibase: <http://wikiba.se/ontology#>
+  
+  SELECT
+     ?image ?discoverer ?discovererLabel
+      (COUNT(DISTINCT ?planet) as ?count)
+      
+  WHERE
+  {
+      ?ppart wdt:P279* wd:Q634 .
+      ?planet wdt:P31 ?ppart .
+      ?planet wdt:P61 ?discoverer .
+      ?discoverer wdt:P18 ?image .
+   
+      SERVICE wikibase:label {
+          bd:serviceParam wikibase:language "en" .
+          ?discoverer rdfs:label ?discovererLabel .
+          ?planet rdfs:label ?planetLabel .
+          ?image rdfs:label ?imageLabel
+      }
+  }
+  GROUP BY ?image ?discoverer ?discovererLabel
+  ORDER BY DESC(?count)
+  LIMIT 6`;
+
+   
+  // Encodage de l'URL à transmettre à wikidata
+  var url_base = "https://query.wikidata.org/bigdata/namespace/wdq/sparql?query=";
+  var url = url_base + encodeURIComponent(query) + "&format=json";
+
+  // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
+  var xmlhttp = new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          var results = JSON.parse(this.responseText);
+          console.log(results);
+          for(var i = 0; i< results.results.bindings.length; i++)
+            {
+              console.log(results.results.bindings[i]["discovererLabel"]["value"]);
+              console.log(results.results.bindings[i]["image"]["value"]);
+              var contenu = "<div class=\"discoverer\"><img src=\"";
+              contenu += results.results.bindings[i]["image"]["value"];
+              contenu += "\" class=\"discoverer-image\"> <div class=\"discoverer-name\">";
+              contenu += results.results.bindings[i]["discovererLabel"]["value"];
+              contenu +="</div>  <div style=\"color:white;\">"
+              contenu += results.results.bindings[i]["count"]["value"]
+              contenu +=" planets</div> </div>"
+             
+              console.log(contenu);
+              document.getElementById("list-discoverers").innerHTML += contenu;
+            }
+      }
+  };
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
