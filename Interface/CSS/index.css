@@ -1223,7 +1223,7 @@ label{
 .carousel {
   max-width: 37.5rem;
   margin: 0 auto;
-  padding: 0 1.25rem;
+  padding: 0 0;
   font-family: 'Lato', sans-serif;
 
   box-sizing: border-box;
@@ -1256,7 +1256,7 @@ ol, li {
 
 .carousel {
   position: relative;
-  padding-top: 75%;
+  padding-top: 400px; 
   filter: drop-shadow(0 0 10px #0003);
   perspective: 100px;
 }
@@ -1295,7 +1295,7 @@ ol, li {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 400px;
   scroll-snap-align: center;
 }
 
