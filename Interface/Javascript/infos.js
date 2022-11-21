@@ -73,9 +73,13 @@ async function chargerInformations(){
         {
             source = stringifiedJson.split("source\":\"")[1];
             source = source.split("\"}}}}")[0];
+            var secondsource = source.split("50px");
+            var secondsource1 = secondsource[0];
+            var secondsource2 = secondsource[1];
+            var finalsource = secondsource1 + "300px" + secondsource2;
         }
 
-        document.getElementById("planetImage").setAttribute("src",source);
+        document.getElementById("planetImage").setAttribute("src",finalsource);
     }
     });
 
