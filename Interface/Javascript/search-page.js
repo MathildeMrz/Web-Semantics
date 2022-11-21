@@ -61,9 +61,11 @@ async function chercherImages(researchedPlanet, id){
             ?satellite dbp:satelliteOf ?p. `;
     }
     else {
-        query = `SELECT str(?p) WHERE {
+        query = `SELECT str(?p) ?l GROUP_CONCAT(distinct ?l1; separator=" -- ") as ?autresnoms WHERE {
             ?p a dbo:Planet. 
-            ?p dbp:name ?l. `;
+            ?p rdfs:label ?l. 
+            ?p rdfs:label ?l1. 
+            FILTER(langMatches(lang(?l),"`+language+`") && !(langMatches(lang(?l1),"`+language+`")))`;
         if(deity != "")
         {
             //TODO
@@ -81,14 +83,8 @@ async function chercherImages(researchedPlanet, id){
 
     if(searchedPlanet != "")
     {
-        query += `FILTER(langMatches(lang(?l),"`+language+`"))
-        FILTER(regex(lcase(str(?l)), lcase(str(".*`
-        +searchedPlanet + `.*"))))
-        }`
-    }
-    else
-    {
-        query += `FILTER(langMatches(lang(?l),"`+language+`"))}`
+        query += `FILTER(regex(lcase(str(?l)), lcase(str(".*`+searchedPlanet + `.*"))) ||regex(lcase(str(?l1)), ".*`+searchedPlanet+`.*" ))
+        `
     }
 
     console.log("queryyyyyyy : "+query);
@@ -114,7 +110,10 @@ async function chercherImages(researchedPlanet, id){
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>`
     
     +query+
-    `GROUP BY ?p `;
+    `} GROUP BY ?p ?l
+    Order By ?l`;
+
+    console.log("queryyyyyyy : "+contenu_requete);
         // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
         var url_base = "http://dbpedia.org/sparql";
         var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
@@ -135,14 +134,20 @@ async function chercherImages(researchedPlanet, id){
                 }
                 else
                 {
+                    console.log(results.results.bindings)
                     for (var i = 0; i < results.results.bindings.length; i++) {
-                        var name = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
-                        var str = name.replace(/ /g, "_");
+                        var name0 = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
+                        var name = (results.results.bindings[i]["l"].value)
+                        var autres_noms = (results.results.bindings[i]["autresnoms"].value)
+                        console.log(name)
+                        var str = name0.replace(/ /g, "_");
                         document.getElementById("listPlanetes").innerHTML +=
-                        '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name)+')>'
+                        '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name0)+')>'
                         +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
-                        +'<div id="name'+(i+1)+'" class="name">'+name+'</div>'
+                        +'<div id="name'+(i+1)+'" class="name"><strong>'+name+'</strong></div>'
+                        +'<div id="autresnoms'+(i+1)+'" class="autresnoms"><h1>'+autres_noms+'</h1></div>'
                         +'</div>';
+                        console.log(name)
                         chercherImages(str, ("img"+(i+1)));
                     }
                 }
