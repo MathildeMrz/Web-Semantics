@@ -1,1 +1,1 @@
- 
+ Pour ouvrir le navigateur de recherche, ouvrir index.html avec Live Server au niveau de VS Code
