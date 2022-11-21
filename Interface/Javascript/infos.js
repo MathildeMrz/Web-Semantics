@@ -172,12 +172,12 @@ function rechercher(researchedPlanet) {
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
     
-        SELECT DISTINCT ?propertyName ?hasValue ?isValueOf
+        SELECT DISTINCT ?propertyName ?hasValue
         WHERE {
         {  `+lien_infos +`?property ?hasValue.
             ?property rdfs:label ?propertyName
         }
-        FILTER((langMatches(lang(?propertyName),"FR") || langMatches(lang(?propertyName),"EN")) && (((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) && (str(?hasValue) != "")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double))
+        FILTER((str(?propertyName) != "has abstract") && (str(?propertyName) != "image") && (langMatches(lang(?propertyName),"FR") || langMatches(lang(?propertyName),"EN")) && (((langMatches(lang(?hasValue),"FR") || langMatches(lang(?hasValue),"EN")) && (str(?hasValue) != "")) || datatype(?hasValue) = xsd:integer || datatype(?hasValue) = xsd:double))
         }
     `;
 
