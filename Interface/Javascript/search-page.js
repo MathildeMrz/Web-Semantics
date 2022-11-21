@@ -22,7 +22,11 @@ async function chercherImages(researchedPlanet, id){
         const stringifiedJson = JSON.stringify(data);
         var source = stringifiedJson.split("source\":\"")[1];
         source = source.split("\"}}}}")[0];
-        document.getElementById(id).setAttribute("src",source);
+        var secondsource = source.split("50px");
+        var secondsource1 = secondsource[0];
+        var secondsource2 = secondsource[1];
+        var finalsource = secondsource1 + "300px" + secondsource2;
+        document.getElementById(id).setAttribute("src",finalsource);
     }
     });
 }
@@ -127,7 +131,7 @@ async function chercherImages(researchedPlanet, id){
                 console.log(results.results.bindings.length);
                 if(results.results.bindings.length == 0)
                 {
-                    window.location.replace("../Src/pageNotFound.html");
+                    window.location.assign("../Src/pageNotFound.html");
                 }
                 else
                 {
@@ -164,5 +168,5 @@ async function chercherImages(researchedPlanet, id){
   }
 
   function afficherInformations(planet) {
-    window.location.replace("../Src/infos.html?"+planet);
+    window.location.assign("../Src/infos.html?"+planet);
   }
