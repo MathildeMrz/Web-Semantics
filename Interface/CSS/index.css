@@ -1409,6 +1409,7 @@ ol, li {
   color: white;
   font-family: 'Inter-bold';
   text-align: center;
+  -webkit-text-stroke: 1px black;
 }
 .carousel__slide{
   background-size: contain;
