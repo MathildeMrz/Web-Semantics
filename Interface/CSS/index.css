@@ -590,6 +590,9 @@ label{
     z-index: 1;
     opacity: 0.85;
   }
+  .planet-ring::before{
+    max-width: 205px;
+  }
 }
 
  .planet-ring::before {
