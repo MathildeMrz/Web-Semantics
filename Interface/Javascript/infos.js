@@ -13,8 +13,10 @@ function rechercher2() {
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?description
+    SELECT ?description ?label
     WHERE { `+lien_infos +` rdfs:comment ?description.
+    `+lien_infos+`rdfs:label ?label.
+    FILTER(langMatches(lang(?label),"`+language+`"))
     FILTER(langMatches(lang(?description),"`+language+`"))}`;
     var contenu_requete_secours = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -26,8 +28,10 @@ function rechercher2() {
     PREFIX dbpedia2: <http://dbpedia.org/property/>
     PREFIX dbpedia: <http://dbpedia.org/>
     PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-    SELECT ?description
-    WHERE { `+lien_infos +` dbo:abstract ?description }`;
+    SELECT ?description ?label
+    WHERE { `+lien_infos +` dbo:abstract ?description.
+                `+lien_infos+`rdfs:label ?label.
+                FILTER(langMatches(lang(?label),"`+language+`"}`;
 
     // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
@@ -38,12 +42,15 @@ function rechercher2() {
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            var results = JSON.parse(this.responseText);
+           console.log(results);
            var source;
+           var nom;
            results["results"]["bindings"].forEach(element => {
             source = element.description.value;
+            nom = element.label.value;
         })
             document.getElementById("planetDescription2").innerText = source;
-
+            document.getElementById("planetName").innerHTML = nom;
         }
     };
 
@@ -96,7 +103,7 @@ async function chargerInformations(){
     }
     });
 
-    document.getElementById("planetName").innerHTML = researchedPlanet;
+    //document.getElementById("planetName").innerHTML = researchedPlanet;
 
     //Charger donnÃƒÂ©es
 
