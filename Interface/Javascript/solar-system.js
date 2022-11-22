@@ -42,5 +42,5 @@ $(window).on('load',function(){
     });
 
     function visit(planet){
-        window.location.assign("http://127.0.0.1:5500/Interface/Src/infos.html?"+planet)
+        window.location.assign("http://127.0.0.1:5500/Interface/Src/infos.html?"+planet+`?en`)
     }
