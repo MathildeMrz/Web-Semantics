@@ -113,7 +113,7 @@ async function chercherImages(researchedPlanet, id){
         PREFIX : <http://dbpedia.org/resource/>
         PREFIX dbpedia2: <http://dbpedia.org/property/>
         PREFIX dbpedia: <http://dbpedia.org/>
-        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>` +query + `FILTER(regex(lcase(str(?l)), lcase(str(".*Uranus.*"))) ||regex(lcase(str(?l1)), ".*Uranus.*" ))} GROUP BY ?sat ?lsat1 Order By ?lsat1`;
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>` +query + `} GROUP BY ?sat ?lsat1 Order By ?lsat1`;
     console.log(contenu_requete);
     }
     else
