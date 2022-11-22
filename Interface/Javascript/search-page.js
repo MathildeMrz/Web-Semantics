@@ -63,7 +63,7 @@ async function chercherImages(researchedPlanet, id){
 ?sat rdfs:label ?lsat1.
 ?sat rdfs:label ?lsat2.
             ?p1 rdfs:label ?l1. 
-            FILTER(langMatches(lang(?lsat1),"en") && !(langMatches(lang(?lsat2),"en"))) `;
+            FILTER(langMatches(lang(?lsat1),"`+language+`") && !(langMatches(lang(?lsat2),"`+language+`"))) `;
     }
     else {
         query = `SELECT str(?p) ?l GROUP_CONCAT(distinct ?l1; separator=" -- ") as ?autresnoms WHERE {
