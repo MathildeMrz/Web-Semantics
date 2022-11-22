@@ -55,10 +55,15 @@ async function chercherImages(researchedPlanet, id){
     var query;
     if(satelliteOf == "true")
     {
-        query = `SELECT str(?satellite) WHERE {
-            ?p a dbo:Planet. 
-            ?p rdfs:label ?l. 
-            ?satellite dbp:satelliteOf ?p. `;
+        query = `SELECT str(?sat) ?lsat1 GROUP_CONCAT(distinct ?lsat2; separator=" -- ") as ?autresnoms   WHERE {
+            ?p1 a dbo:Planet. 
+            ?p1 rdfs:label ?l. 
+            ?sat dbp:satelliteOf ?p1. 
+?p1 rdfs:label ?l1. 
+?sat rdfs:label ?lsat1.
+?sat rdfs:label ?lsat2.
+            ?p1 rdfs:label ?l1. 
+            FILTER(langMatches(lang(?lsat1),"en") && !(langMatches(lang(?lsat2),"en"))) `;
     }
     else {
         query = `SELECT str(?p) ?l GROUP_CONCAT(distinct ?l1; separator=" -- ") as ?autresnoms WHERE {
@@ -96,8 +101,23 @@ async function chercherImages(researchedPlanet, id){
     if(language == "fr"){
         document.getElementById('radio-button-french').checked = true;
     }
-    
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+    if(satelliteOf == "true")
+    {
+        var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX dc: <http://purl.org/dc/elements/1.1/>
+        PREFIX : <http://dbpedia.org/resource/>
+        PREFIX dbpedia2: <http://dbpedia.org/property/>
+        PREFIX dbpedia: <http://dbpedia.org/>
+        PREFIX skos: <http://www.w3.org/2004/02/skos/core#>` +query + `FILTER(regex(lcase(str(?l)), lcase(str(".*Uranus.*"))) ||regex(lcase(str(?l1)), ".*Uranus.*" ))} GROUP BY ?sat ?lsat1 Order By ?lsat1`;
+    console.log(contenu_requete);
+    }
+    else
+    {var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -110,7 +130,7 @@ async function chercherImages(researchedPlanet, id){
     
     +query+
     `} GROUP BY ?p ?l
-    Order By ?l`;
+    Order By ?l`;}
 
     if(searchedPlanet == "")
     {
@@ -137,7 +157,10 @@ async function chercherImages(researchedPlanet, id){
                 {
                     for (var i = 0; i < results.results.bindings.length; i++) {
                         var name0 = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
-                        var name = (results.results.bindings[i]["l"].value)
+                        if(satelliteOf == "true")
+                        {
+                            var name = (results.results.bindings[i]["lsat1"].value)
+                        }else{var name = (results.results.bindings[i]["l"].value)}
                         var autres_noms = (results.results.bindings[i]["autresnoms"].value)
                         var str = name0.replace(/ /g, "_");
                         document.getElementById("listPlanetes").innerHTML +=
