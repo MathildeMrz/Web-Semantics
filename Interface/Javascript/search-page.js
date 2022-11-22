@@ -57,7 +57,7 @@ async function chercherImages(researchedPlanet, id){
     {
         query = `SELECT str(?satellite) WHERE {
             ?p a dbo:Planet. 
-            ?p dbp:name ?l. 
+            ?p rdfs:label ?l. 
             ?satellite dbp:satelliteOf ?p. `;
     }
     else {
@@ -87,7 +87,6 @@ async function chercherImages(researchedPlanet, id){
         `
     }
 
-    console.log("queryyyyyyy : "+query);
 
     document.getElementById("search").value = searchedPlanet;
     document.getElementById("deity").value = deity;
@@ -113,11 +112,15 @@ async function chercherImages(researchedPlanet, id){
     `} GROUP BY ?p ?l
     Order By ?l`;
 
-    console.log("queryyyyyyy : "+contenu_requete);
+    if(searchedPlanet == "")
+    {
+        contenu_requete += ` LIMIT 200
+        `
+    }
+
         // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
         var url_base = "http://dbpedia.org/sparql";
         var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
-        console.log(url);
 
         // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
         var xmlhttp = new XMLHttpRequest();
@@ -125,29 +128,24 @@ async function chercherImages(researchedPlanet, id){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 results = JSON.parse(this.responseText);
-                console.log(results);
-                console.log("bjr");
-                console.log(results.results.bindings.length);
+
                 if(results.results.bindings.length == 0)
                 {
                     window.location.assign("../Src/pageNotFound.html");
                 }
                 else
                 {
-                    console.log(results.results.bindings)
                     for (var i = 0; i < results.results.bindings.length; i++) {
                         var name0 = (results.results.bindings[i]["callret-0"].value).split("resource/")[1];
                         var name = (results.results.bindings[i]["l"].value)
                         var autres_noms = (results.results.bindings[i]["autresnoms"].value)
-                        console.log(name)
                         var str = name0.replace(/ /g, "_");
                         document.getElementById("listPlanetes").innerHTML +=
-                        '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name0)+')>'
+                        '<div class="card" id="'+(i+1)+'" onclick=afficherInformations('+JSON.stringify(name0)+',' + JSON.stringify(language)+')>'
                         +'<img id="img'+(i+1)+'" src="../../assets/notFound.jpg" alt="" style="width:90%;">'
                         +'<div id="name'+(i+1)+'" class="name"><strong>'+name+'</strong></div>'
                         +'<div id="autresnoms'+(i+1)+'" class="autresnoms"><h1>'+autres_noms+'</h1></div>'
                         +'</div>';
-                        console.log(name)
                         chercherImages(str, ("img"+(i+1)));
                     }
                 }
@@ -172,6 +170,6 @@ async function chercherImages(researchedPlanet, id){
         xmlhttp.send();
   }
 
-  function afficherInformations(planet) {
-    window.location.assign("../Src/infos.html?"+planet);
+  function afficherInformations(planet, lang) {
+    window.location.assign("../Src/infos.html?"+planet+"?"+lang);
   }

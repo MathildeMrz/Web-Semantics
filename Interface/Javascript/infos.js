@@ -1,8 +1,22 @@
 function rechercher2() {
-    var researchedPlanet = window.location.search;
-    researchedPlanet = researchedPlanet.slice(1);
+    var infos_req = window.location.search;
+    researchedPlanet = infos_req.split("?")[1];
+    language = infos_req.split("?")[2];
     var lien_infos = "<http://dbpedia.org/resource/"+researchedPlanet+">";
-    var contenu_requete = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    var contenu_requete_init = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    PREFIX dc: <http://purl.org/dc/elements/1.1/>
+    PREFIX : <http://dbpedia.org/resource/>
+    PREFIX dbpedia2: <http://dbpedia.org/property/>
+    PREFIX dbpedia: <http://dbpedia.org/>
+    PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+    SELECT ?description
+    WHERE { `+lien_infos +` rdfs:comment ?description.
+    FILTER(langMatches(lang(?description),"`+language+`"))}`;
+    var contenu_requete_secours = `PREFIX owl: <http://www.w3.org/2002/07/owl#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -17,7 +31,7 @@ function rechercher2() {
 
     // Encodage de l'URL Ãƒ  transmettre Ãƒ  DBPedia
     var url_base = "http://dbpedia.org/sparql";
-    var url = url_base + "?query=" + encodeURIComponent(contenu_requete) + "&format=json";
+    var url = url_base + "?query=" + encodeURIComponent(contenu_requete_init) + "&format=json";
 
     // RequÃƒÂªte HTTP et affichage des rÃƒÂ©sultats
     var xmlhttp = new XMLHttpRequest();
@@ -26,10 +40,8 @@ function rechercher2() {
            var results = JSON.parse(this.responseText);
            var source;
            results["results"]["bindings"].forEach(element => {
-            if(element.description["xml:lang"]=="en"){
-                source = element.description.value;
-
-            }});
+            source = element.description.value;
+        })
             document.getElementById("planetDescription2").innerText = source;
 
         }
@@ -39,8 +51,9 @@ function rechercher2() {
     xmlhttp.send();
 }
 async function chargerInformations(){
-    var researchedPlanet = window.location.search;
-    researchedPlanet = researchedPlanet.slice(1);
+    var infos_req = window.location.search;
+    researchedPlanet = infos_req.split("?")[1];
+    language = infos_req.split("?")[2];
     //Charger image
     var getJSON = function(url, callback) {
         var xhr = new XMLHttpRequest();
@@ -129,7 +142,6 @@ async function chargerInformations(){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var results = JSON.parse(this.responseText);
-            console.log(results);
             for(var i = 0; i< results.results.bindings.length; i++)
             {
                 var newDiv = document.createElement("div");
